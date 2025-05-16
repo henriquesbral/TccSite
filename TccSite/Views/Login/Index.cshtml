@@ -1,0 +1,85 @@
+﻿<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Monitoramento Corrego</title>
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+</head>
+
+<body>
+    <main class="container" onsubmit="logar(event)">
+        <img src="/Assets/imagens/enchente.png" alt="ImagemPlanetaTerra" width="312" height="312">
+        <h3 style="color: white;">Monitoramento Córrego Av. Carlos Caldeira Filho</h3>
+        <section class="formulario">
+            <div class="formulario_form">
+                <form class="forms">
+                    <div class="form">
+                        <input type="email" class="form-control" id="login" placeholder="Email" required>
+                    </div>
+                    <div class="form">
+                        <input type="password" class="form-control" id="senha" placeholder="Senha">
+                    </div>
+                    <button class="btn btn-success" type="submit">Entrar</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="link">
+            <div class="link_links">
+                <div class="links_cadastro">
+                    <a href="/TelaCadastro/cadastro.html" class="link-light">
+                        Cadastre-se clicando
+                        aqui
+                    </a>
+                </div>
+                <div class="links_resetsenha">
+                    <a href="/#" class="link-light" data-bs-toggle="modal"
+                       data-bs-target="#ModalReset">
+                        Esqueci
+                        minha senha
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalReset" role="dialog" aria-labelledby="TituloModalCentralizado"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TituloModalCentralizado">Reset de Senha</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form class="modal-reset-senha">
+                            <div class="form-group">
+                                <input class="form-control" type="email" name="email" id="email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" name="senhaatual" id="seatual"
+                                       placeholder="Nova Senha">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="password" name="novasenha" id="novasenha"
+                                       placeholder="Repetir Senha">
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Fechar</button>
+                            <button type="submit" class="btn btn-outline-primary">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/login.js" asp-append-version="true"></script>
+</body>
+</html>
