@@ -1,0 +1,53 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', 'sans-serif';
+}
+
+body {
+    box-sizing: border-box;
+    background-color: #27374D;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img_user {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    width: 20rem;
+    height: 20rem;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.dados {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 15px;
+    width: 90vw;
+    margin-top: 20px;
+}
+
+.dados_basicos_form {
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    height: 90vh;
+}
+
+.input_basicos {
+    width: 30rem;
+}
+
+.titulo_dados_endereco {
+    margin-top: 20px;
+}
