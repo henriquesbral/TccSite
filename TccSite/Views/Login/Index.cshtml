@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Mvc.ViewFeatures
 
 @{
-    Layout = null; // Impedir que o Layout seja aplicado
+    Layout = null;
 }
 
 <!doctype html>
@@ -17,19 +17,22 @@
 </head>
 
 <body>
-    <main class="container" onsubmit="logar(event)">
+    <main class="container">
         <img src="/Assets/imagens/enchente.png" alt="ImagemPlanetaTerra" width="312" height="312">
         <h3 style="color: white;">Monitoramento Córrego Av. Carlos Caldeira Filho</h3>
         <section class="formulario">
             <div class="formulario_form">
                 <form class="forms">
                     <div class="form">
-                        <input type="email" class="form-control" id="login" placeholder="Email" required>
+                        <input type="text" class="form-control" id="usuario" placeholder="Email" required>
                     </div>
                     <div class="form">
                         <input type="password" class="form-control" id="senha" placeholder="Senha">
                     </div>
-                    <button class="btn btn-success" type="submit">Entrar</button>
+                    @* <button class="btn btn-primary" type="button" id="Login">Entrar</button> *@
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a class="btn btn-secondary" href="javascript:;" role="button" id="Login">Entrar</a>
+                    </div>
                 </form>
             </div>
         </section>
@@ -37,7 +40,7 @@
         <section class="link">
             <div class="link_links">
                 <div class="links_cadastro">
-                    <a href="/TelaCadastro/cadastro.html" class="link-light">
+                    <a href="#" class="link-light" onclick="Cadastrar()">
                         Cadastre-se clicando
                         aqui
                     </a>
