@@ -9,7 +9,7 @@
         Swal.fire({
             title: "Carregando..",
             html: "Bem-vindo ao site! <br> Redirecionando em <b></b> ms",
-            timer: 2000,
+            timer: 1000,
             timerProgressBar: true,
             didOpen: () => {
                 Swal.showLoading();
@@ -24,7 +24,7 @@
         }).then((result) => {
             /* finalizando o load e abrindo a pagina*/
             if (result.dismiss === Swal.DismissReason.timer) {
-                location.href = "/TelaPrincipal/dashboard.html";
+                location.href = "/Dashboard";
             }
         });
     } else {
