@@ -8,10 +8,8 @@ namespace TccSite.Controllers
 
         public struct RetornoJson
         {
-            public bool success;
-            public string msg;
-            public object retorno;
-            public string msgSucesso;
+            public bool success { get; set; }
+            public string? msg { get; set; }
         }
     }
 }

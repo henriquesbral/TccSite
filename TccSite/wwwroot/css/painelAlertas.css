@@ -8,102 +8,28 @@
 
 body {
     box-sizing: border-box;
-    background-color: #27374D;
+    background-color: #BAE0C4;
 }
 
-.cabecalho {
-    background-color: white;
-    border-bottom: 2px solid black;
-}
-
-.cabecalho_titulo {
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    text-align: start;
-    font-size: xx-large;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+img-relatorio {
+    width: 50px;
+    height: 50px;
 }
 
 .titulo_painel {
-    background-color: white;
+    background-color: #FFFFF0;
     border-radius: 3px;
     margin-top: 10px;
-    width: 95vw;
+    width: auto;
     display: flex;
     align-items: center;
-}
-
-.filtro {
-    display: flex;
-    border-radius: 3px;
-    margin-top: 10px;
-    background-color: white;
-    width: 95vw;
-    height: auto;
-    box-sizing: border-box;
-}
-
-.filtro_alertas {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 15px;
-}
-
-.form-label {
-    font-weight: bold;
-}
-
-.form_data {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    font-weight: bold;
-}
-
-.form-control {
-    width: 30rem;
-    height: 3rem;
-}
-
-.form_select {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.form-select {
-    width: 30rem;
-    height: 3rem;
-}
-
-.fomr_submit {
-    display: flex;
-}
-
-.btn {
-    border: 2px solid black;
-    width: 10rem;
-    font-weight: 600;
 }
 
 .alertas_tabela {
     display: flex;
     border-radius: 3px;
     margin-top: 10px;
-    background-color: white;
-    width: 95vw;
+    background-color: #FFFFF0;
+    width: auto;
+    height: auto;
 }

@@ -1,31 +1,48 @@
-﻿<!DOCTYPE html>
-<html lang="pt-br">
+﻿@{
+    Layout = "_Layout";
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de alertas</title>
-    <link rel="stylesheet" href="/css/painelAlertas.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+<style>
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-<body>
-    <main class="container">
-        <div class="titulo_painel">
-            <img src="/Assets/imagens/img_relatorio.png" alt="imagem_relatorio" width="50px" height="50px">
-            <h2>Relatório Painel Alertas</h2>
+    main {
+        flex: 1;
+    }
+
+    .page-container {
+        min-height: calc(100vh - 10px);
+        padding-top: 10px;
+        background-color: #f8f9fa; /* cor de fundo suave */
+    }
+</style>
+
+<div class="page-container d-flex flex-column">
+    <!-- Cabeçalho -->
+    <div class="card p-1 m-2 rounded-1">
+        <div class="d-flex align-items-center">
+            <img src="/Assets/imagens/img_relatorio.png" alt="imagem_relatorio" class="img-relatorio me-3">
+            <h1 class="mb-0" style="font-weight:700;">Relatório Painel Alertas</h1>
         </div>
-        <section class="filtro">
-            <div class="filtro_alertas">
-                <form class="form">
-                    <div class="form_data">
-                        <label class="form-label">Data Inicial:</label>
-                        <input type="date" class="form-control" id="datainicio">
-                        <label class="form-label">Data Final:</label>
-                        <input type="date" class="form-control" id="datafim">
-                    </div>
-                    <div class="form_select">
+    </div>
+
+    <!-- Filtros -->
+    <div class="card p-3 m-2 rounded-1">
+        <div class="filtro_alertas">
+            <form class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <label class="form-label">Data Início</label>
+                    <input type="date" class="form-control" id="DataInicio">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label class="form-label">Data Fim</label>
+                    <input type="date" class="form-control" id="DataFim">
+                </div>
+                <div class="col-md-12 d-flex align-items-end flex-wrap gap-3">
+                    <div class="flex-grow-0" style="min-width: 200px;">
                         <label class="form-label">Tipo Alerta:</label>
                         <select class="form-select">
                             <option selected>Todos</option>
@@ -34,28 +51,33 @@
                             <option value="3">Médio</option>
                             <option value="4">Baixo</option>
                         </select>
-                        <div class="form_submit">
-                            <button class="btn btn-success" type="submit">Filtrar</button>
-                            <button class="btn btn-secondary" type="reset">Limpar</button>
-                        </div>
                     </div>
-                </form>
-            </div>
-        </section>
-        <section class="alertas_tabela">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Detalhes</th>
-                        <th scope="col">Tipo Alerta</th>
-                        <th scope="col">Nível</th>
-                        <th scope="col">Data</th>
-                    </tr>
-                </thead>
-            </table>
-        </section>
-    </main>
-    <script src="/js/painelAlertas.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-</body>
-</html>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-success" type="submit">Filtrar</button>
+                        <button class="btn btn-secondary" type="reset">Limpar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabela com rolagem -->
+    <div class="card p-2 m-2 flex-fill overflow-auto rounded-1">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Detalhes</th>
+                    <th scope="col">Tipo Alerta</th>
+                    <th scope="col">Nível</th>
+                    <th scope="col">Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Linhas preenchidas via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="/js/painelAlertas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>

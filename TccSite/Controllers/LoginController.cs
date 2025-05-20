@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Web.Helpers;
+﻿using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
+using TccSite.Entities;
 
 namespace TccSite.Controllers
 {
@@ -9,26 +10,29 @@ namespace TccSite.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
-        public JsonResult Logar(string usuario, string senha)
+        public JsonResult Logar([FromBody] Login request)
         {
             var res = new RetornoJson { success = false };
+
             try
             {
-                //var autenticado = Autenticar(usuario, senha);
-
-                res.success = true;
+                if (request.Usuario == "admin@gmail.com" && request.Senha == "teste")
+                {
+                    res.success = true;
+                }
+                else
+                {
+                    res.msg = "Usuário ou senha inválidos.";
+                }
             }
             catch (Exception)
             {
                 res.msg = msgErroPadrao;
             }
 
-            var json = Json(res);
-            json.Value = Int32.MaxValue;
-
-            return json;
+            return Json(res); 
         }
     }
 }

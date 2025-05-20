@@ -1,0 +1,15 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.page-container {
+    min-height: 100vh;
+    background-color: #dee2e6; /* igual ao bg-secondary */
+    padding-bottom: 1rem;
+}
+
+    .page-container > .card.flex-fill {
+        min-height: 0;
+        overflow-y: auto;
+    }

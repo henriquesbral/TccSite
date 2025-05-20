@@ -1,62 +1,99 @@
-﻿<!DOCTYPE html>
-<html lang="pt-br">
+﻿@{
+    Layout = "_Layout";
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atualizar Cadastro</title>
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/estilo.css">
-    <link rel="stylesheet" href="/css/atualizarCadastro.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
+<style>
+    body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-<body>
-    <main class="container">
-        <div class="img_user">
-            <img src="/Assets/imagens/user.jpeg" alt="imagem usuario">
+    main {
+        flex: 1;
+    }
+
+    .page-container {
+        min-height: calc(100vh - 50px); 
+        padding-top: 30px; 
+        background-color: #f8f9fa; /* cor de fundo suave */
+    }
+</style>
+
+<main class="page-container">
+    <div class="container-fluid px-4">
+        <div class="card shadow rounded-5 p-4">
+            <div class="row mb-4 align-items-center">
+                <div class="col-md-3 text-center">
+                    <img src="/Assets/imagens/user.jpeg" alt="Imagem do Usuário"
+                         class="img-thumbnail rounded-circle"
+                         style="width: 150px; height: 150px; object-fit: cover;">
+                    <input type="file" class="form-control mt-2" aria-label="Upload da imagem de perfil">
+                </div>
+                <div class="col-md-9">
+                    <h4 class="mb-3">Atualizar Informações do Cadastro</h4>
+                    <form class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Nome</label>
+                            <input type="text" class="form-control" id="Nome">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Sobrenome</label>
+                            <input type="text" class="form-control" id="Sobrenome">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Telefone/Celular</label>
+                            <input type="text" class="form-control" id="Telefone">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">CPF</label>
+                            <input type="text" class="form-control" id="CPF">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="Email">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Endereço</label>
+                            <input type="text" class="form-control" id="endereco" placeholder="Rua Caiutí">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">CEP</label>
+                            <input type="text" class="form-control" id="Cep" placeholder="05776-100">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="Cidade" placeholder="São Paulo">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Estado</label>
+                            <select id="inputState" class="form-select">
+                                <option selected disabled>Selecione o estado</option>
+                                <option>SP</option>
+                                <option>RJ</option>
+                                <option>MG</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nova Senha</label>
+                            <input type="password" class="form-control" id="NovSenha">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Confirmação da Nova Senha</label>
+                            <input type="password" class="form-control" id="ConNovSenha">
+                        </div>
+                        <div class="col-12 d-grid mt-4">
+                            <button type="submit" class="btn btn-secondary btn-lg">Atualizar Cadastro</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="dados">
-            <form class="dados_basicos_form">
-                <div class="nome">
-                    <label>Nome</label>
-                    <input class="input_basicos" type="text" placeholder="Abilio">
-                </div>
-                <div class="cpf">
-                    <label>CPF</label>
-                    <input class="input_basicos" type="int" placeholder="123">
-                </div>
-                <div class="data_nasc">
-                    <label>Data de Nascimento</label>
-                    <input class="input_basicos" type="date" placeholder="00/00/0000">
-                </div>
-                <div class="sexo">
-                    <label>Sexo</label>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">Masculino</label>
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">Feminino</label>
-                </div>
-                <div class="estado_civil">
-                    <label class="form-label">Estado Cívil:</label>
-                    <select class="input_basicos">
-                        <option value="1">Solteiro</option>
-                        <option value="2">Casado</option>
-                        <option value="3">Divorciado</option>
-                    </select>
-                </div>
-                <div class="dados_endereco">
-                    <h2 class="titulo_dados_endereco">Endereço</h2>
-                </div>
-            </form>
-        </div>
-    </main>
-    <script src="/js/atualizarCadastro.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-</body>
+    </div>
+</main>
 
-</html>
+<!-- Scripts -->
+<script src="/js/atualizarCadastro.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>

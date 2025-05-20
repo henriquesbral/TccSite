@@ -8,46 +8,12 @@
 
 body {
     box-sizing: border-box;
-    background-color: #27374D;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    background-color: #f9f1f1;
 }
 
 .img_user {
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    width: 20rem;
-    height: 20rem;
+    margin-top: 2px;
     border: 2px solid black;
-    border-radius: 5px;
-}
-
-.dados {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 15px;
-    width: 90vw;
-    margin-top: 20px;
-}
-
-.dados_basicos_form {
-    border: 2px solid black;
-    border-radius: 5px;
-    background-color: white;
-    height: 90vh;
-}
-
-.input_basicos {
-    width: 30rem;
-}
-
-.titulo_dados_endereco {
-    margin-top: 20px;
+    border-radius: 10px;
 }
