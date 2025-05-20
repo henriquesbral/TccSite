@@ -1,40 +1,4 @@
-﻿//function Logar(event) {
-
-//    event.preventDefault();
-//    var login = $("#usuario").val();
-//    var senha = $("#senha").val();
-//    if (login == 'admin@gmail.com' && senha == 'teste') {
-//        Swal.fire({
-//            title: "Carregando..",
-//            html: "Bem-vindo ao site! <br> Redirecionando em <b></b> ms",
-//            timer: 1000,
-//            timerProgressBar: true,
-//            didOpen: () => {
-//                Swal.showLoading();
-//                const timer = Swal.getPopup().querySelector("b");
-//                timerInterval = setInterval(() => {
-//                    if (timer) timer.textContent = `${Swal.getTimerLeft()}`;
-//                }, 100);
-//            },
-//            willClose: () => {
-//                clearInterval(timerInterval);
-//            }
-//        }).then((result) => {
-//            /* finalizando o load e abrindo a pagina*/
-//            if (result.dismiss === Swal.DismissReason.timer) {
-//                window.location.href = "/Dashboard";
-//            }
-//        });
-//    } else {
-//        Swal.fire({
-//            icon: "error",
-//            title: "Oops..",
-//            text: "Usuário ou senha inválidos"
-//        });
-//    }
-//}
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $("#Login").on("click", function (event) {
         event.preventDefault();
 
@@ -95,12 +59,6 @@ $(document).ready(function () {
         });
     });
 });
-
-
-
-function Logoff() {
-    location.href = "/Login";
-}
 
 function Cadastrar() {
     location.href = "/Cadastrar";
