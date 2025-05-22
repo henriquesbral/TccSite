@@ -15,7 +15,7 @@ namespace TccSite.Models.Entities
         [Required]
         public int CPF { get; set; }
 
-        public int Telefone { get; set; }
+        public string Telefone { get; set; }
 
         public DateTime DataNascimento { get; set; }
 
