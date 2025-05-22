@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TccSite.Models.Entities;
 
-namespace TccSite.Data
+namespace TccSite.Data.Context
 {
     public class DataContext : DbContext
     {
@@ -12,6 +13,12 @@ namespace TccSite.Data
         {
             _configuration = configuration;
         }
+
+        #endregion
+
+        #region Properties
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Usuario> LogDeAcessos { get; set; }
 
         #endregion
 

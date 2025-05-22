@@ -2,10 +2,10 @@
     $("#Login").on("click", function (event) {
         event.preventDefault();
 
-        const usuario = $("#usuario").val().trim();
+        const email = $("#email").val().trim();
         const senha = $("#senha").val().trim();
 
-        if (usuario === "") {
+        if (email === "") {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -25,20 +25,16 @@
 
         // Criando o objeto para envio em JSON
         const data = {
-            usuario: usuario,
+            email: email,
             senha: senha
         };
 
         $.ajax({
-            url: '/Login/Logar',
+            url: '/Login/Autenticar',
             type: 'POST',
             contentType: 'application/json', // Envia como JSON
             data: JSON.stringify(data),      // Converte para JSON string
             dataType: 'json',
-            beforeSend: function () {
-                $("#Login").hide();
-                $("#loader").show(); // Se tiver um loader, senão remova esta linha
-            },
             success: function (response) {
                 console.log("Resposta do servidor:", response); // Debug
 
