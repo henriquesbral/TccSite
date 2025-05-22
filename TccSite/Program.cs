@@ -1,45 +1,52 @@
+using Microsoft.EntityFrameworkCore;
+using TccSite.Data.Context;
 using TccSite.Data.Repository;
 using TccSite.Models.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Services Configuration
+// =======================
+// Service Configuration
+// =======================
 
-// MVC Controllers + Views
+// Add MVC with views
 builder.Services.AddControllersWithViews();
 
-// Dependency Injection
+// Configure Entity Framework Core with SQL Server
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register application repositories (Dependency Injection)
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-
-// Adicione aqui novos serviços (ex: DbContext, Identity, AutoMapper, etc.)
-// builder.Services.AddDbContext<...>();
-// builder.Services.AddScoped<IOutroRepositorio, OutroRepositorio>();
-// builder.Services.AddAutoMapper(typeof(Program));
-
-#endregion
+builder.Services.AddScoped<IAlertaRepository, AlertaRepository>();
+builder.Services.AddScoped<ICidadeRepository, CidadeRepository>();
+builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
+builder.Services.AddScoped<IStatusAlertaRepository, StatusAlertaRepository>();
+builder.Services.AddScoped<IPessoaCadastroRepository, PessoaCadastroRepository>();
+builder.Services.AddScoped<ILogDeAcessosRepository, LogDeAcessosRepository>();
 
 var app = builder.Build();
 
-#region Middleware Pipeline
+// =======================
+// Middleware Pipeline
+// =======================
 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); // HTTPS Strict Transport Security
+    app.UseHsts(); // Enforces HTTPS in production
 }
 
-//app.UseHttpsRedirection(); // Reative se necessário
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-// Endpoint Routing
+// Define default route pattern
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");
-
-#endregion
 
 app.Run();

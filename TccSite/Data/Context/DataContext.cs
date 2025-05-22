@@ -7,11 +7,8 @@ namespace TccSite.Data.Context
     {
         #region Constructor
 
-        private readonly IConfiguration _configuration;
-
-        public DataContext(IConfiguration configuration)
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            _configuration = configuration;
         }
 
         #endregion
@@ -29,9 +26,9 @@ namespace TccSite.Data.Context
 
         #endregion
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
+        //}
     }
 }
