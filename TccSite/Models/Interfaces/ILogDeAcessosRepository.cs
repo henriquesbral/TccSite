@@ -4,10 +4,10 @@ namespace TccSite.Models.Interfaces
 {
     public interface ILogDeAcessosRepository
     {
-        //void Add(LogDeAcessos logDeAcessos);
+        void Add(LogDeAcessos logDeAcessos);
 
-        //void Update(LogDeAcessos newLog);
+        void Update(LogDeAcessos newLog);
 
-        //LogDeAcessos Obter(int codUsuario);
+        LogDeAcessos Obter(int codUsuario);
     }
 }
