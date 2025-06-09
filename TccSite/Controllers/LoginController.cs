@@ -38,10 +38,10 @@ namespace TccSite.Controllers
                 if (usuario == null)
                     res.msg = "Usuario não encontrado, por favor acione a equipe de desenvolvimento.";
 
-                if (request.Email == usuario.Email && request.Senha == usuario.Senha)
+                if (request.Email == usuario.Email && request.Senha == usuario.Senha && usuario.Ativo)
                 {
-                    res.success = false;
-                    res.msg = "Usuario e ou senha incorretos, por gentileza verificar as informações novamente!";
+                    res.success = true;
+                    res.msg = "Acesso validado !";
                 }
                 else
                 {
