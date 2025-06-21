@@ -26,9 +26,5 @@ namespace TccSite.Data.Context
 
         #endregion
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
-        //}
     }
 }

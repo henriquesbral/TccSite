@@ -35,42 +35,40 @@ namespace TccSite.Controllers
 
                 var usuario = _usuarioRepository.ObterAutenticar(request.Email, request.Senha);
 
-                if (usuario == null)
-                    res.msg = "Usuario não encontrado, por favor acione a equipe de desenvolvimento.";
-
-                if (request.Email == usuario.Email && request.Senha == usuario.Senha && usuario.Ativo)
+                if (usuario != null && request.Email == usuario.Email && request.Senha == usuario.Senha && usuario.Ativo)
                 {
+                    var log = _logDeAcessosRepository.Obter(usuario.CodUsuario);
+
+                    if (log != null && log.CodUsuario == usuario.CodUsuario)
+                    {
+                        log.DataUltimoAcesso = DateTime.Now;
+                        _logDeAcessosRepository.Update(log);
+                    }
+                    else
+                    {
+                        var newLog = new LogDeAcessos();
+
+                        newLog.CodUsuario = usuario.CodUsuario;
+                        newLog.DataUltimoAcesso = DateTime.Now;
+                        _logDeAcessosRepository.Add(newLog);
+
+                        res.success = true;
+                    }
                     res.success = true;
                     res.msg = "Acesso validado !";
                 }
                 else
                 {
-                    //var log = _logDeAcessosRepository.Obter(usuario.CodUsuario);
-
-                    //if (log != null && log.CodUsuario == usuario.CodUsuario)
-                    //{
-                    //    log.DataUltimoAcesso = DateTime.Now;
-                    //    _logDeAcessosRepository.Update(log);
-                    //}
-                    //else
-                    //{
-                    //    var newLog = new LogDeAcessos();
-
-                    //    newLog.CodUsuario = usuario.CodUsuario;
-                    //    newLog.DataUltimoAcesso = DateTime.Now;
-                    //    _logDeAcessosRepository.Add(newLog);
-
-                    //    res.success = true;
-                    //}
-                    res.success = true;
+                    res.msg = "Usuario não encontrado, por favor acione a equipe de desenvolvimento.";
+                    res.success = false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                res.msg = msgErroPadrao;
+                res.msg = ($"{msgErroPadrao}: {ex.Message}");
             }
 
-            return Json(res); 
+            return Json(res);
         }
     }
 }
