@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TccSite", "TccSite\TccSite.csproj", "{90053E48-A007-413A-8501-87FE405F5213}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TccEsp32CamAPI", "TccEsp32CamAPI\TccEsp32CamAPI.csproj", "{2F4DC4BA-A795-4D51-8ED4-0F7F48A2E97C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{90053E48-A007-413A-8501-87FE405F5213}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90053E48-A007-413A-8501-87FE405F5213}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90053E48-A007-413A-8501-87FE405F5213}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F4DC4BA-A795-4D51-8ED4-0F7F48A2E97C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4DC4BA-A795-4D51-8ED4-0F7F48A2E97C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4DC4BA-A795-4D51-8ED4-0F7F48A2E97C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4DC4BA-A795-4D51-8ED4-0F7F48A2E97C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
