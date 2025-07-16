@@ -13,6 +13,11 @@ namespace TccSite.Data.Repository
             _context = context;
         }
 
+        public List<Alerta> BuscarAlertas()
+        {
+            return _context.Alerta.ToList();
+        }
+
         public List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
         {
             var relatorio = new List<Alerta>();
