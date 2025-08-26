@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TccSite.Models.Interfaces;
+using TccSite.Models.Entities;
+using TccSite.Models.ViewModels;
+using TccSite.Models.Enums;
 
 namespace TccSite.Controllers
 {
@@ -14,7 +17,9 @@ namespace TccSite.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var alertas = _alertaRepository.BuscarAlertas().Where(alerta => alerta.Ativo == "1").OrderByDescending(x => x.DataCadastro).ToList();
+
+            return View(alertas);
         }
 
         [HttpGet]
@@ -22,7 +27,15 @@ namespace TccSite.Controllers
         {
             var dados = _alertaRepository.BuscarAlertas();
 
-            var data = dados;
+            var data = dados
+                .Select(x => new AlertaGraficoViewModel
+                {
+                    CodAlerta = x.CodAlerta,
+                    DataCadastro = x.DataCadastro,
+                    NivelRio = x.NivelRio,
+                    StatusAlerta = ((StatusAlertaEnum)x.CodStatusAlerta).ToString()
+                })
+                .ToList();
 
             return Json(data);
         }

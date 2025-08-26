@@ -1,4 +1,5 @@
-﻿using TccSite.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using TccSite.Data.Context;
 using TccSite.Models.Entities;
 using TccSite.Models.Interfaces;
 
@@ -20,7 +21,8 @@ namespace TccSite.Data.Repository
 
         public List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
         {
-            var relatorio = new List<Alerta>();
+            var relatorio = _context.Alerta
+                .FromSqlRaw("EXEC USP_GerarRelatorioAlertas @p0, @p1, @p2", dataInicio, dataFim, tipoAlerta).ToList();
 
             return relatorio;
         }

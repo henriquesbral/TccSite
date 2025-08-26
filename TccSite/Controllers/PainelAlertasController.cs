@@ -14,11 +14,12 @@ namespace TccSite.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            //var relatorios =;
+            return View();//return View(relatorios);
         }
 
         [HttpGet]
-        public IActionResult BuscarRelatorio(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
+        public JsonResult BuscarRelatorio(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
         {
             var res = new RetornoJson { success = false };
 
@@ -26,11 +27,12 @@ namespace TccSite.Controllers
             {
                 var dadosRelatorio = _alertaRepository.BuscarDados(dataInicio, dataFim, tipoAlerta);
 
-                return View(dadosRelatorio);
+                // retorna como JSON para o JS consumir
+                return Json(dadosRelatorio);
             }
             catch (Exception ex)
             {
-                res.msg = ($"{msgErroPadrao}: {ex.Message}");
+                res.msg = $"Erro ao buscar relatório: {ex.Message}";
                 return Json(res);
             }
         }
