@@ -27,7 +27,7 @@ namespace TccSite.Controllers
             {
                 var dadosRelatorioAlerta = _alertaRepository.BuscarDados(dataInicio, dataFim, tipoAlerta, tipoRelatorio);
 
-                return Json(res);
+                return Json(dadosRelatorioAlerta);
             }
             catch (Exception ex)
             {
