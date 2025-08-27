@@ -19,10 +19,10 @@ namespace TccSite.Data.Repository
             return _context.Alerta.ToList();
         }
 
-        public List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
+        public List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio)
         {
             var relatorio = _context.Alerta
-                .FromSqlRaw("EXEC USP_GerarRelatorioAlertas @p0, @p1, @p2", dataInicio, dataFim, tipoAlerta).ToList();
+                .FromSqlRaw("EXEC USP_GerarRelatorioAlertas @p0, @p1, @p2", dataInicio, dataFim, tipoAlerta, tipoRelatorio).ToList();
 
             return relatorio;
         }

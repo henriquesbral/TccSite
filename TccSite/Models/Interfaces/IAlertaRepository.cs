@@ -8,6 +8,6 @@ namespace TccSite.Models.Interfaces
 
         Alerta Get(int codAlerta);
 
-        List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta);
+        List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio);
     }
 }

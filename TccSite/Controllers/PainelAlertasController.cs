@@ -19,15 +19,32 @@ namespace TccSite.Controllers
         }
 
         [HttpGet]
-        public JsonResult BuscarRelatorio(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
+        public JsonResult BuscarRelatorioAlerta(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio)
         {
             var res = new RetornoJson { success = false };
 
             try
             {
-                var dadosRelatorio = _alertaRepository.BuscarDados(dataInicio, dataFim, tipoAlerta);
+                var dadosRelatorioAlerta = _alertaRepository.BuscarDados(dataInicio, dataFim, tipoAlerta, tipoRelatorio);
 
-                // retorna como JSON para o JS consumir
+                return Json(res);
+            }
+            catch (Exception ex)
+            {
+                res.msg = $"Erro ao buscar relatório: {ex.Message}";
+                return Json(res);
+            }
+        }
+
+        [HttpGet]
+        public JsonResult BuscarRelatorioImagens(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio)
+        {
+            var res = new RetornoJson { success = false };
+
+            try
+            {
+                var dadosRelatorio = _alertaRepository.BuscarDados(dataInicio, dataFim, tipoAlerta, tipoRelatorio);
+
                 return Json(dadosRelatorio);
             }
             catch (Exception ex)
