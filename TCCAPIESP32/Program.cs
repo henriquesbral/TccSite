@@ -4,12 +4,11 @@ using TCCAPIESP32.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Lê a connection string do appsettings.json
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new InvalidOperationException("A ConnectionString 'DefaultConnection' não foi configurada no appsettings.json");
+    throw new InvalidOperationException("A ConnectionString não foi configurada no appsettings.json");
 }
 
 builder.Services.AddDbContext<AppDbContext>(options =>

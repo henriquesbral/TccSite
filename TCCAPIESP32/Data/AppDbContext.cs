@@ -10,5 +10,6 @@ namespace TCCAPIESP32.Data
         }
 
         public DbSet<ImagensEsp32> ImagensEsp32 { get; set; }
+        public DbSet<LogImagensEsp32> LogImagensEsp32 { get; set; }
     }
 }

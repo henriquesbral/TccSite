@@ -12,6 +12,9 @@ namespace TCCAPIESP32.Controllers
         private readonly ImageProcessingService _imageProcessingService;
         private readonly ImagensEsp32Service _imagemEspService;
 
+        const string RetornoPositivo = "Sucesso";
+        const string RetornoNegativo = "Erro";
+
         public CameraController(
             CameraService cameraService,
             ImageProcessingService imageProcessingService,
@@ -22,25 +25,12 @@ namespace TCCAPIESP32.Controllers
             _imagemEspService = metadataService;
         }
 
-        [HttpPost("capturar")]
+        [HttpPost("Capturar")]
         public async Task<IActionResult> CapturarFoto()
         {
-            var imagePath = await _cameraService.CapturePhotoAsync();
 
-            if (imagePath is null)
-                return BadRequest("Não foi possível capturar a imagem do ESP32-CAM.");
-
-            // Salva os metadados no banco
-            var metadata = await _imagemEspService.SalvarImagemAsync(imagePath);
-
-            // Processa a imagem com IA
-            var resultadoIA = await _imageProcessingService.ProcessImageAsync(imagePath);
-
-            return Ok(new
-            {
-                metadata,
-                resultadoIA
-            });
+            var resultado = await RotinaImagens();
+            return Ok(new { Mensagem = "Rotina Finalizada", Resultado = resultado });
         }
 
         [HttpGet("ImagensSalvar")]
@@ -48,6 +38,44 @@ namespace TCCAPIESP32.Controllers
         {
             var lista = _imagemEspService.Listar();
             return Ok(lista);
+        }
+
+        private async Task<Dictionary<string, bool>> RotinaImagens()
+        {
+            var retorno = new Dictionary<string, bool>();
+            var horaAtual = DateTime.Now;
+
+            //InicioRotina
+            var tempoFim = horaAtual.AddHours(1);
+
+            while (DateTime.Now <= tempoFim)
+            {
+                try
+                {
+                    var imagePath = await _cameraService.CapturePhotoAsync();
+
+                    if (imagePath is null)
+                    {
+                        retorno["Captura"] = false;
+                        break;
+                    }
+
+                    var metadata = await _imagemEspService.SalvarImagemAsync(imagePath);
+                    retorno["Imagem salva"] = metadata != null;
+
+                    var resultadoIA = await _imageProcessingService.ProcessImageAsync(imagePath);
+                    retorno["ProcessamentoIA"] = resultadoIA != null;
+                }
+                catch (Exception ex)
+                {
+                    retorno[ex.Message + DateTime.Now] = false;
+                    break;
+                }
+
+                await Task.Delay(60000);
+            }
+
+            return retorno;
         }
     }
 }
