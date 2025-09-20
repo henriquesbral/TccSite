@@ -2,8 +2,13 @@
 using TCCAPIESP32.Data;
 using TCCAPIESP32.Models;
 using TCCAPIESP32.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -12,6 +17,7 @@ if (string.IsNullOrEmpty(connectionString))
     throw new InvalidOperationException("A ConnectionString não foi configurada no appsettings.json");
 }
 
+builder.Host.UseSerilog();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 

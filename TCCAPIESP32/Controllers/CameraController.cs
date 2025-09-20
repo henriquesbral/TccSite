@@ -12,6 +12,7 @@ namespace TCCAPIESP32.Controllers
         private readonly ImageProcessingService _imageProcessingService;
         private readonly ImagensEsp32Service _imagemEspService;
         private readonly LogImagensEsp32Service _LogImagensEsp32Service;
+        private readonly ILogger<CameraController> _logger;
 
         const string RetornoPositivo = "Sucesso";
         const string RetornoNegativo = "Erro";
@@ -20,18 +21,20 @@ namespace TCCAPIESP32.Controllers
             CameraService cameraService,
             ImageProcessingService imageProcessingService,
             ImagensEsp32Service metadataService,
-            LogImagensEsp32Service logImagensEsp32Service)
+            LogImagensEsp32Service logImagensEsp32Service,
+            ILogger<CameraController> logger)
         {
             _cameraService = cameraService;
             _imageProcessingService = imageProcessingService;
             _imagemEspService = metadataService;
             _LogImagensEsp32Service = logImagensEsp32Service;
+            _logger = logger;
         }
 
         [HttpPost("Capturar")]
         public async Task<IActionResult> CapturarFoto()
         {
-
+            _logger.LogInformation("Iniciando o processamento da RotinaImagens", DateTime.Now);
             var resultado = await RotinaImagens();
             return Ok(new { Mensagem = "Rotina Finalizada", Resultado = resultado });
         }
