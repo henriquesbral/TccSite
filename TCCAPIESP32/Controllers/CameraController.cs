@@ -34,8 +34,8 @@ namespace TCCAPIESP32.Controllers
         [HttpPost("Capturar")]
         public async Task<IActionResult> CapturarFoto()
         {
-            _logger.LogInformation("Iniciando o processamento da RotinaImagens", DateTime.Now);
-            var resultado = await RotinaImagens();
+            _logger.LogInformation("Iniciando o processamento da RotinaCapturaImagens", DateTime.Now);
+            var resultado = await RotinaCapturaImagens();
             return Ok(new { Mensagem = "Rotina Finalizada", Resultado = resultado });
         }
 
@@ -46,7 +46,7 @@ namespace TCCAPIESP32.Controllers
             return Ok(lista);
         }
 
-        private async Task<Dictionary<string, bool>> RotinaImagens()
+        private async Task<Dictionary<string, bool>> RotinaCapturaImagens()
         {
             var retorno = new Dictionary<string, bool>();
             var horaAtual = DateTime.Now;
@@ -58,6 +58,7 @@ namespace TCCAPIESP32.Controllers
             {
                 try
                 {
+                    _logger.LogInformation("Iniciando o processamento da CapturePhotoAsync", DateTime.Now);
                     var imagePath = await _cameraService.CapturePhotoAsync();
 
                     if (imagePath is null)
