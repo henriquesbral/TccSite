@@ -66,7 +66,7 @@ namespace TCCAPIESP32.Controllers
                         var log = new LogImagensEsp32
                         {
                             CodEventoImagem = 1,
-                            MensagemProcessamentoStatus = "ImagemPath veio nula",
+                            MensagemProcessamentoStatus = "ImagemPath is null",
                             DataLog = DateTime.Now
                         };
                         _LogImagensEsp32Service.SalvarLog(log);
