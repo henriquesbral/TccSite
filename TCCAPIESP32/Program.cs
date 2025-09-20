@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TCCAPIESP32.Data;
+using TCCAPIESP32.Models;
 using TCCAPIESP32.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<CameraService>();
 builder.Services.AddScoped<ImageProcessingService>();
 builder.Services.AddScoped<ImagensEsp32Service>();
+builder.Services.AddScoped<LogImagensEsp32Service>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

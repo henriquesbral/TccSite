@@ -7,7 +7,7 @@ namespace TCCAPIESP32.Services
     {
         private readonly AppDbContext _context;
 
-        public LogImagensEsp32Service(AppDbContext context, IConfiguration configuration)
+        public LogImagensEsp32Service(AppDbContext context)
         {
             _context = context;
         }
@@ -17,6 +17,7 @@ namespace TCCAPIESP32.Services
             _context.LogImagensEsp32.Add(log);
             _context.SaveChanges();
         }
+
         public List<LogImagensEsp32> Obter()
         {
             return _context.LogImagensEsp32.ToList();

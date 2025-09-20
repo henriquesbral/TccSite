@@ -11,6 +11,7 @@ namespace TCCAPIESP32.Controllers
         private readonly CameraService _cameraService;
         private readonly ImageProcessingService _imageProcessingService;
         private readonly ImagensEsp32Service _imagemEspService;
+        private readonly LogImagensEsp32Service _LogImagensEsp32Service;
 
         const string RetornoPositivo = "Sucesso";
         const string RetornoNegativo = "Erro";
@@ -18,11 +19,13 @@ namespace TCCAPIESP32.Controllers
         public CameraController(
             CameraService cameraService,
             ImageProcessingService imageProcessingService,
-            ImagensEsp32Service metadataService)
+            ImagensEsp32Service metadataService,
+            LogImagensEsp32Service logImagensEsp32Service)
         {
             _cameraService = cameraService;
             _imageProcessingService = imageProcessingService;
             _imagemEspService = metadataService;
+            _LogImagensEsp32Service = logImagensEsp32Service;
         }
 
         [HttpPost("Capturar")]
@@ -57,18 +60,32 @@ namespace TCCAPIESP32.Controllers
                     if (imagePath is null)
                     {
                         retorno["Captura"] = false;
+                        var log = new LogImagensEsp32
+                        {
+                            CodEventoImagem = 1,
+                            MensagemProcessamentoStatus = "ImagemPath veio nula",
+                            DataLog = DateTime.Now
+                        };
+                        _LogImagensEsp32Service.SalvarLog(log);
                         break;
                     }
 
                     var metadata = await _imagemEspService.SalvarImagemAsync(imagePath);
                     retorno["Imagem salva"] = metadata != null;
 
-                    var resultadoIA = await _imageProcessingService.ProcessImageAsync(imagePath);
-                    retorno["ProcessamentoIA"] = resultadoIA != null;
+                    //var resultadoIA = await _imageProcessingService.ProcessImageAsync(imagePath);
+                    //retorno["ProcessamentoIA"] = resultadoIA != null;
                 }
                 catch (Exception ex)
                 {
                     retorno[ex.Message + DateTime.Now] = false;
+                    var log = new LogImagensEsp32
+                    {
+                        CodEventoImagem = 0,
+                        MensagemProcessamentoStatus = ex.Message,
+                        DataLog = DateTime.Now
+                    };
+                    _LogImagensEsp32Service.SalvarLog(log);
                     break;
                 }
 

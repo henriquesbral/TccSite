@@ -9,6 +9,7 @@ namespace TCCAPIESP32.Services
         private readonly AppDbContext _context;
         private readonly string _pastaImagens;
         private readonly string _prefixoArquivo;
+        private readonly LogImagensEsp32Service _LogImagensEsp32Service;
 
         public ImagensEsp32Service(AppDbContext context, IConfiguration configuration)
         {
@@ -32,6 +33,15 @@ namespace TCCAPIESP32.Services
 
             _context.ImagensEsp32.Add(imagem);
             await _context.SaveChangesAsync();
+
+            var log = new LogImagensEsp32
+            {
+                CodEventoImagem = imagem.CodEventoImagem,
+                MensagemProcessamentoStatus = $"Imagem salva: {imagem.NomeArquivo}",
+                DataLog = DateTime.Now
+            };
+
+            _LogImagensEsp32Service.SalvarLog(log);
 
             return imagem;
         }
