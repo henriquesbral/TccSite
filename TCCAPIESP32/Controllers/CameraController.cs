@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TCCAPIESP32.Services;
 using TCCAPIESP32.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TCCAPIESP32.Controllers
 {
@@ -34,9 +35,9 @@ namespace TCCAPIESP32.Controllers
         [HttpPost("Capturar")]
         public async Task<IActionResult> CapturarFoto()
         {
-            _logger.LogInformation("Iniciando o processamento da RotinaCapturaImagens");
-            var resultado = await RotinaCapturaImagens();
-            _logger.LogInformation("Finalizando o processamento da RotinaCapturaImagens");
+            _logger.LogInformation("Iniciando o processamento da RotinaCapturaImagensAsync");
+            var resultado = await RotinaCapturaImagensAsync();
+            _logger.LogInformation("Finalizando o processamento da RotinaCapturaImagensAsync");
             return Ok(new { Mensagem = "Rotina Finalizada", Resultado = resultado });
         }
 
@@ -47,7 +48,7 @@ namespace TCCAPIESP32.Controllers
             return Ok(lista);
         }
 
-        private async Task<Dictionary<string, bool>> RotinaCapturaImagens()
+        private async Task<Dictionary<string, bool>> RotinaCapturaImagensAsync()
         {
             var retorno = new Dictionary<string, bool>();
             var horaAtual = DateTime.Now;
@@ -59,8 +60,8 @@ namespace TCCAPIESP32.Controllers
             {
                 try
                 {
-                    _logger.LogInformation("Iniciando o processamento da CapturePhotoAsync");
-                    var imagePath = await _cameraService.CapturePhotoAsync();
+                    _logger.LogInformation("Iniciando o processamento da CapturarImagemAsync");
+                    var imagePath = await _cameraService.CapturarImagemAsync();
 
                     if (imagePath is null)
                     {
@@ -77,6 +78,18 @@ namespace TCCAPIESP32.Controllers
 
                     var metadata = await _imagemEspService.SalvarImagemAsync(imagePath);
                     retorno["Imagem salva"] = metadata != null;
+
+                    if (metadata != null)
+                    {
+                        var log = new LogImagensEsp32
+                        {
+                            CodEventoImagem = metadata.CodEventoImagem,
+                            MensagemProcessamentoStatus = $"Imagem salva: {metadata.NomeArquivo}",
+                            DataLog = DateTime.Now
+                        };
+
+                        _LogImagensEsp32Service.SalvarLog(log);
+                    }
 
                     //var resultadoIA = await _imageProcessingService.ProcessImageAsync(imagePath);
                     //retorno["ProcessamentoIA"] = resultadoIA != null;
@@ -95,7 +108,7 @@ namespace TCCAPIESP32.Controllers
                     break;
                 }
 
-                await Task.Delay(60000);
+                //await Task.Delay(5000);
             }
 
             return retorno;

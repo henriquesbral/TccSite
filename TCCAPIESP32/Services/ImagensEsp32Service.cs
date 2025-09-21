@@ -34,15 +34,6 @@ namespace TCCAPIESP32.Services
             _context.ImagensEsp32.Add(imagem);
             await _context.SaveChangesAsync();
 
-            var log = new LogImagensEsp32
-            {
-                CodEventoImagem = imagem.CodEventoImagem,
-                MensagemProcessamentoStatus = $"Imagem salva: {imagem.NomeArquivo}",
-                DataLog = DateTime.Now
-            };
-
-            _LogImagensEsp32Service.SalvarLog(log);
-
             return imagem;
         }
 

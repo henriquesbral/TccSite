@@ -4,29 +4,63 @@ namespace TCCAPIESP32.Services
 {
     public class CameraService
     {
-        private readonly string _esp32Url;
+        private readonly string _esp32BaseUrl;
+        private readonly string _captureEndpoint;
+        private readonly string _controlEndpoint;
         private readonly string _pastaImagens;
+        private readonly int _defaultFrameSize;
         private readonly ILogger<CameraService> _logger;
 
         public CameraService(IConfiguration configuration, ILogger<CameraService> logger)
         {
-            _esp32Url = configuration["AppSettings:UrlEsp32Cam"] ?? throw new Exception("UrlEsp32Cam não configurada!");
-            _pastaImagens = configuration["AppSettings:PastaImagens"] ?? "wwwroot/images";
+            _esp32BaseUrl = configuration["AppSettings:Esp32CamBaseUrl"]!;
+            _captureEndpoint = configuration["AppSettings:Esp32CaptureEndpoint"]!;
+            _controlEndpoint = configuration["AppSettings:Esp32ControlEndpoint"]!;
+            _defaultFrameSize = int.Parse(configuration["AppSettings:DefaultFrameSize"]!);
+            _pastaImagens = configuration["AppSettings:PastaImagens"]!;
             _logger = logger;
         }
 
-        public async Task<string?> CapturePhotoAsync()
+        private async Task<bool> SetResolutionAsync(HttpClient client)
+        {
+            var url = $"{_esp32BaseUrl}{_controlEndpoint}?var=framesize&val={_defaultFrameSize}";
+            var resp = await client.GetAsync(url);
+
+            if (!resp.IsSuccessStatusCode)
+            {
+                _logger.LogError("Falha ao configurar resolução para {FrameSize}. Status: {StatusCode}", _defaultFrameSize, resp.StatusCode);
+                return false;
+            }
+
+            _logger.LogInformation("Resolução configurada para UXGA (1600x1200).");
+            return true;
+        }
+
+        public async Task<string?> CapturarImagemAsync()
         {
             try
             {
                 _logger.LogInformation("Iniciando captura de imagem do ESP32 em {Hora}", DateTime.Now);
 
                 using var client = new HttpClient();
-                var bytes = await client.GetByteArrayAsync(_esp32Url);
+
+                // Configura resolução
+                if (!await SetResolutionAsync(client))
+                    return null;
+
+                // Captura imagem
+                var resp = await client.GetAsync($"{_esp32BaseUrl}{_captureEndpoint}");
+                if (!resp.IsSuccessStatusCode)
+                {
+                    _logger.LogError("Falha ao capturar imagem. Status: {StatusCode}", resp.StatusCode);
+                    return null;
+                }
+
+                var bytes = await resp.Content.ReadAsByteArrayAsync();
 
                 if (bytes == null || bytes.Length == 0)
                 {
-                    _logger.LogWarning("A captura da imagem retornou vazia do ESP32 em {Hora}", DateTime.Now);
+                    _logger.LogWarning("A captura da imagem retornou vazia.");
                     return null;
                 }
 
