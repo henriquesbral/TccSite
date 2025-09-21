@@ -34,8 +34,9 @@ namespace TCCAPIESP32.Controllers
         [HttpPost("Capturar")]
         public async Task<IActionResult> CapturarFoto()
         {
-            _logger.LogInformation("Iniciando o processamento da RotinaCapturaImagens", DateTime.Now);
+            _logger.LogInformation("Iniciando o processamento da RotinaCapturaImagens");
             var resultado = await RotinaCapturaImagens();
+            _logger.LogInformation("Finalizando o processamento da RotinaCapturaImagens");
             return Ok(new { Mensagem = "Rotina Finalizada", Resultado = resultado });
         }
 
@@ -58,7 +59,7 @@ namespace TCCAPIESP32.Controllers
             {
                 try
                 {
-                    _logger.LogInformation("Iniciando o processamento da CapturePhotoAsync", DateTime.Now);
+                    _logger.LogInformation("Iniciando o processamento da CapturePhotoAsync");
                     var imagePath = await _cameraService.CapturePhotoAsync();
 
                     if (imagePath is null)
@@ -83,10 +84,11 @@ namespace TCCAPIESP32.Controllers
                 catch (Exception ex)
                 {
                     retorno[ex.Message + DateTime.Now] = false;
+                    _logger.LogInformation($"Ocorreu um erro: {ex.Message}");
                     var log = new LogImagensEsp32
                     {
                         CodEventoImagem = 0,
-                        MensagemProcessamentoStatus = ex.Message,
+                        MensagemProcessamentoStatus = $"Ocorreu um erro: {ex.Message}",
                         DataLog = DateTime.Now
                     };
                     _LogImagensEsp32Service.SalvarLog(log);
