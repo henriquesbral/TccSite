@@ -1,0 +1,23 @@
+﻿@using TccSite.Models.ViewModels
+@model IEnumerable<ImagemViewModel>
+@{
+    ViewData["Title"] = "Galeria de Imagens";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">🖼️ Galeria de Imagens</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var img in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="@Url.Content(img.Url)" class="card-img-top" alt="Imagem do Rio" />
+                    <div class="card-body">
+                        <h6 class="card-title">Nível: @img.NivelMetro m</h6>
+                        <p class="card-text"><small class="text-muted">Capturada em @img.DataCaptura.ToString("dd/MM/yyyy HH:mm")</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

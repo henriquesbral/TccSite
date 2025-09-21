@@ -1,0 +1,72 @@
+﻿@model RelatorioViewModel
+@{
+    ViewData["Title"] = "Relatório Avançado";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg mb-4">
+        <div class="card-header bg-secondary text-white">
+            <h4 class="mb-0">📊 Relatório Avançado</h4>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-2 mb-3">
+                <div class="col-md-5">
+                    <input type="date" asp-for="DataInicio" class="form-control" />
+                </div>
+                <div class="col-md-5">
+                    <input type="date" asp-for="DataFim" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-dark w-100">Filtrar</button>
+                </div>
+            </form>
+
+            <!-- Estatísticas -->
+            <div class="row text-center mb-4">
+                <div class="col-md-4">
+                    <div class="alert alert-success">
+                        <strong>Máx:</strong> @Model.NivelMax m
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-warning">
+                        <strong>Mín:</strong> @Model.NivelMin m
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="alert alert-info">
+                        <strong>Média:</strong> @Model.NivelMedio m
+                    </div>
+                </div>
+            </div>
+
+            <!-- Highcharts -->
+            <div id="graficoNiveis" style="height: 400px;"></div>
+
+            <div class="mt-4">
+                <a asp-action="ExportarPdf" class="btn btn-danger me-2">📕 Exportar PDF</a>
+                <a asp-action="ExportarExcel" class="btn btn-success">📗 Exportar Excel</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        Highcharts.chart('graficoNiveis', {
+            chart: { type: 'line' },
+            title: { text: 'Níveis do Rio no Período' },
+            xAxis: {
+                categories: @Html.Raw(Json.Serialize(Model.Dados.Select(d => d.Data.ToString("dd/MM"))))
+            },
+            yAxis: {
+                title: { text: 'Nível (m)' }
+            },
+            series: [{
+                name: 'Nível do Rio',
+                data: @Html.Raw(Json.Serialize(Model.Dados.Select(d => d.NivelMetro)))
+            }]
+        });
+    </script>
+}
