@@ -25,6 +25,8 @@ builder.Services.AddScoped<IStatusAlertaRepository, StatusAlertaRepository>();
 builder.Services.AddScoped<IPessoaCadastroRepository, PessoaCadastroRepository>();
 builder.Services.AddScoped<ILogDeAcessosRepository, LogDeAcessosRepository>();
 builder.Services.AddScoped<IImagemStatusRepository, ImagemStatusRepository>();
+builder.Services.AddScoped<IConfiguracoesRepository, ConfiguracoesRepository>();
+
 
 var app = builder.Build();
 

@@ -1,37 +1,48 @@
 ﻿@using TccSite.Models.ViewModels
 @model ConfiguracoesViewModel
-@{
+
+@* @{
     ViewData["Title"] = "Configurações do Sistema";
-}
+} *@
 
 <div class="container mt-4">
     <div class="card shadow-lg">
         <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">⚙️ Configurações do Sistema</h4>
+            <h4 class="mb-0">⚙️ Configurações do Sistema De Monitoramento ⚙️</h4>
         </div>
         <div class="card-body">
-            <form asp-action="SalvarConfiguracoes" method="post">
-                <div class="row mb-3">
+            <form asp-action="Salvar" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row mb-2">
                     <div class="col-md-6">
-                        <label class="form-label">Nível de Atenção (m)</label>
-                        <input asp-for="NivelAtencao" class="form-control" />
+                        <label asp-for="LimiteAlertaBaixo" class="form-label"></label>
+                        <input asp-for="LimiteAlertaBaixo" class="form-control" />
+                        <span asp-validation-for="LimiteAlertaBaixo" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Nível Crítico (m)</label>
-                        <input asp-for="NivelCritico" class="form-control" />
+                        <label asp-for="LimiteAlertaMedio" class="form-label"></label>
+                        <input asp-for="LimiteAlertaMedio" class="form-control" />
+                        <span asp-validation-for="LimiteAlertaMedio" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Frequência de Captura (min)</label>
+                        <label asp-for="LimiteAlertaAlto" class="form-label"></label>
+                        <input asp-for="LimiteAlertaAlto" class="form-control" />
+                        <span asp-validation-for="LimiteAlertaAlto" class="text-danger"></span>
+                    </div>                    
+                    <div class="col-md-6">
+                        <label asp-for="LimiteAlertaCritico" class="form-label"></label>
+                        <input asp-for="LimiteAlertaCritico" class="form-control" />
+                        <span asp-validation-for="LimiteAlertaCritico" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FrequenciaCaptura" class="form-label"></label>
                         <input asp-for="FrequenciaCaptura" class="form-control" />
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Destinatários de Alerta</label>
-                        <textarea asp-for="EmailsAlerta" class="form-control" rows="2"></textarea>
+                        <span asp-validation-for="FrequenciaCaptura" class="text-danger"></span>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success">💾 Salvar</button>
+
+                <button type="submit" class="btn btn-success">Salvar</button>
             </form>
         </div>
     </div>

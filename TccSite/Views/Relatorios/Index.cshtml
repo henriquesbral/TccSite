@@ -1,72 +1,81 @@
-﻿@model RelatorioViewModel
+﻿@using TccSite.Models.ViewModels
+@model RelatorioViewModel
 @{
     ViewData["Title"] = "Relatório Avançado";
 }
 
-<div class="container mt-4">
-    <div class="card shadow-lg mb-4">
-        <div class="card-header bg-secondary text-white">
-            <h4 class="mb-0">📊 Relatório Avançado</h4>
+<div class="page-container d-flex flex-column">
+    <!-- Cabeçalho -->
+    <div class="card p-1 m-2 rounded-1">
+        <div class="d-flex align-items-center">
+            <img src="/Assets/imagens/img_relatorio.png" alt="imagem_relatorio" class="img-relatorio me-3">
+            <h1 class="mb-0" style="font-weight:700;">Relatórios</h1>
         </div>
-        <div class="card-body">
-            <form method="get" class="row g-2 mb-3">
-                <div class="col-md-5">
-                    <input type="date" asp-for="DataInicio" class="form-control" />
-                </div>
-                <div class="col-md-5">
-                    <input type="date" asp-for="DataFim" class="form-control" />
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-dark w-100">Filtrar</button>
+    </div>
+
+    <!-- Seletor de tipo de relatório -->
+    <div class="card p-3 m-2 rounded-1">
+        <div class="filtro_alertas">
+            <form id="formTipoRelatorio" class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <label class="form-label">Tipo de Relatório</label>
+                    <select class="form-select" id="TipoRelatorio">
+                        <option value="" selected disabled>Selecione um tipo</option>
+                        <option value="nivel">Nível do Rio</option>
+                        <option value="alerta">Alertas</option>
+                        <!-- Adicione outros tipos se necessário -->
+                    </select>
                 </div>
             </form>
-
-            <!-- Estatísticas -->
-            <div class="row text-center mb-4">
-                <div class="col-md-4">
-                    <div class="alert alert-success">
-                        <strong>Máx:</strong> @Model.NivelMax m
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="alert alert-warning">
-                        <strong>Mín:</strong> @Model.NivelMin m
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="alert alert-info">
-                        <strong>Média:</strong> @Model.NivelMedio m
-                    </div>
-                </div>
-            </div>
-
-            <!-- Highcharts -->
-            <div id="graficoNiveis" style="height: 400px;"></div>
-
-            <div class="mt-4">
-                <a asp-action="ExportarPdf" class="btn btn-danger me-2">📕 Exportar PDF</a>
-                <a asp-action="ExportarExcel" class="btn btn-success">📗 Exportar Excel</a>
-            </div>
         </div>
+    </div>
+
+    <!-- Campos de data e botão de filtro (inicialmente escondidos) -->
+    <div id="filtrosDatas" class="card p-3 m-2 rounded-1" style="display:none;">
+        <form class="row g-3">
+            <div class="col-md-6 col-lg-4">
+                <label class="form-label">Data Início</label>
+                <input type="date" class="form-control" id="DataInicio">
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <label class="form-label">Data Fim</label>
+                <input type="date" class="form-control" id="DataFim">
+            </div>
+            <div class="col-md-12 d-flex align-items-end flex-wrap gap-3">
+                <div class="flex-grow-0" style="min-width: 200px;">
+                    <label class="form-label">Tipo Alerta:</label>
+                    <select class="form-select" id="TipoAlerta">
+                        <option value="0" selected>Todos</option>
+                        <option value="4">Crítico</option>
+                        <option value="3">Alto</option>
+                        <option value="2">Médio</option>
+                        <option value="1">Baixo</option>
+                    </select>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success" type="submit">Filtrar</button>
+                    <button class="btn btn-secondary" type="reset">Limpar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tabela com rolagem -->
+    <div class="card p-2 m-2 flex-fill overflow-auto rounded-1">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Detalhes</th>
+                    <th scope="col">Tipo Alerta</th>
+                    <th scope="col">Nível</th>
+                    <th scope="col">Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Linhas preenchidas via JS -->
+            </tbody>
+        </table>
     </div>
 </div>
 
-@section Scripts {
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script>
-        Highcharts.chart('graficoNiveis', {
-            chart: { type: 'line' },
-            title: { text: 'Níveis do Rio no Período' },
-            xAxis: {
-                categories: @Html.Raw(Json.Serialize(Model.Dados.Select(d => d.Data.ToString("dd/MM"))))
-            },
-            yAxis: {
-                title: { text: 'Nível (m)' }
-            },
-            series: [{
-                name: 'Nível do Rio',
-                data: @Html.Raw(Json.Serialize(Model.Dados.Select(d => d.NivelMetro)))
-            }]
-        });
-    </script>
-}
+<script src="~/js/relatorio.js"></script>

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<UsuarioViewModel>
+﻿@using TccSite.Models.ViewModels
+@model IEnumerable<UsuarioViewModel>
 @{
     ViewData["Title"] = "Administração de Usuários";
 }
@@ -25,10 +26,10 @@
                         <tr>
                             <td>@usuario.Nome</td>
                             <td>@usuario.Email</td>
-                            <td><span class="badge bg-info">@usuario.Perfil</span></td>
+                            <td><span class="badge bg-info">@usuario.CodPerfilUsuario</span></td>
                             <td>
-                                <a asp-action="Editar" asp-route-id="@usuario.Id" class="btn btn-sm btn-warning">✏️</a>
-                                <a asp-action="Excluir" asp-route-id="@usuario.Id" class="btn btn-sm btn-danger">🗑️</a>
+                                <a asp-action="Editar" asp-route-id="@usuario.CodUsuario" class="btn btn-sm btn-warning">✏️</a>
+                                <a asp-action="Excluir" asp-route-id="@usuario.CodUsuario" class="btn btn-sm btn-danger">🗑️</a>
                             </td>
                         </tr>
                     }
@@ -37,3 +38,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/admUsuarios.js"></script>

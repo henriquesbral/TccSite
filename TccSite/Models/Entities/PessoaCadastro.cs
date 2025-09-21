@@ -13,7 +13,7 @@ namespace TccSite.Models.Entities
         public string Sobrenome { get; set; }
 
         [Required]
-        public int CPF { get; set; }
+        public string CPF { get; set; }
 
         public string Telefone { get; set; }
 

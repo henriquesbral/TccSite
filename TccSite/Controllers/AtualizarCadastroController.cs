@@ -2,7 +2,7 @@
 
 namespace TccSite.Controllers
 {
-    public class AtualizarCadastroController : Controller
+    public class AtualizarCadastroController : BaseController
     {
         public IActionResult Index()
         {

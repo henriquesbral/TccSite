@@ -23,6 +23,7 @@ namespace TccSite.Data.Context
         public DbSet<StatusAlerta> StatusAlerta { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<ImagensEsp32> ImagensEsp32 { get; set; }
+        public DbSet<Configuracoes> Configuracoes { get; set; }
 
 
         #endregion

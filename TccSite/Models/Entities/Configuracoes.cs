@@ -1,6 +1,6 @@
-﻿namespace TccSite.Models.ViewModels
+﻿namespace TccSite.Models.Entities
 {
-    public class ConfiguracoesViewModel
+    public class Configuracoes
     {
         public int Id { get; set; }
         public decimal LimiteAlertaBaixo { get; set; }
@@ -8,6 +8,6 @@
         public decimal LimiteAlertaAlto { get; set; }
         public decimal LimiteAlertaCritico { get; set; }
         public int FrequenciaCaptura { get; set; }
-
     }
+
 }

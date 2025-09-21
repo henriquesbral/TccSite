@@ -20,5 +20,7 @@ namespace TccSite.Models.Entities
         public bool Ativo { get; set; }
 
         public DateTime DataCadastro { get; set; }
+
+        public PessoaCadastro PessoaCadastro { get; set; }
     }
 }

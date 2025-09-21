@@ -16,7 +16,15 @@
     {
         public DateTime Data { get; set; }
         public decimal NivelMetro { get; set; }
-        public string Status { get; set; } = string.Empty; // Normal, Atenção, Crítico
+        public string Status { get; set; } = string.Empty;
     }
+
+    public class EstatisticaRelatorio
+    {
+        public decimal NivelMax { get; set; }
+        public decimal NivelMin { get; set; }
+        public decimal NivelMedio { get; set; }
+    }
+
 
 }
