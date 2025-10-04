@@ -3,7 +3,7 @@ using TccSite.Models.Entities;
 using TccSite.Models.Interfaces;
 using System.Linq;
 
-namespace TccSite.Data.Repository
+namespace TccSite.Infrastructure.Repository
 {
     public class LogDeAcessosRepository : ILogDeAcessosRepository
     {

@@ -4,7 +4,7 @@ using TccSite.Models.Entities;
 using TccSite.Models.Interfaces;
 using TccSite.Models.ViewModels;
 
-namespace TccSite.Data.Repository
+namespace TccSite.Infrastructure.Repository
 {
     public class UsuarioRepository : IUsuarioRepository
     {

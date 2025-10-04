@@ -3,7 +3,7 @@ using TccSite.Data.Context;
 using TccSite.Models.Entities;
 using TccSite.Models.Interfaces;
 
-namespace TccSite.Data.Repository
+namespace TccSite.Infrastructure.Repository
 {
     public class AlertaRepository : IAlertaRepository
     {

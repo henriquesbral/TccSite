@@ -1,4 +1,6 @@
-﻿@{
+﻿@using TccSite.Models.ViewModels
+@model TccSite.Models.ViewModels.EditarCadastroViewModel
+@{
     Layout = "_Layout";
 }
 
@@ -25,67 +27,74 @@
         <div class="card shadow rounded-5 p-4">
             <div class="row mb-4 align-items-center">
                 <div class="col-md-3 text-center">
-                    <img src="/Assets/imagens/user.jpeg" alt="Imagem do Usuário"
+                    <img src="@(Model.ImagemUrl ?? "/Assets/imagens/user.jpeg")"
+                         alt="Imagem do Usuário"
                          class="img-thumbnail rounded-circle"
                          style="width: 300px; height: 300px; object-fit: cover;">
-                    <input type="file" class="form-control mt-2" aria-label="Upload da imagem de perfil">
+
+                    <input asp-for="ImagemPerfil" type="file" class="form-control mt-2" />
                 </div>
                 <div class="col-md-9">
-                    <h3 class="mb-3"style="font-weight: 500;">Atualizar Informações do Cadastro</h3>
-                    <form class="row g-3">
+                    <h3 class="mb-3" style="font-weight: 500;">Atualizar Informações do Cadastro</h3>
+
+                    <form asp-action="Edit" asp-controller="Usuario" method="post" enctype="multipart/form-data" class="row g-3">
+                        <input type="hidden" asp-for="CodUsuario" />
+
                         <div class="col-md-6">
-                            <label class="form-label">Nome</label>
-                            <input type="text" class="form-control" id="Nome">
+                            <label asp-for="Nome" class="form-label"></label>
+                            <input asp-for="Nome" class="form-control" />
                         </div>
+
                         <div class="col-md-6">
-                            <label class="form-label">Sobrenome</label>
-                            <input type="text" class="form-control" id="Sobrenome">
+                            <label asp-for="Sobrenome" class="form-label"></label>
+                            <input asp-for="Sobrenome" class="form-control" />
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">Data Nascimento</label>
-                            <input type="date" class="form-control" id="DataNascimento">
+                            <label asp-for="DataNascimento" class="form-label"></label>
+                            <input asp-for="DataNascimento" type="date" class="form-control" />
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">Telefone/Celular</label>
-                            <input type="text" class="form-control" id="Telefone">
+                            <label asp-for="Telefone" class="form-label"></label>
+                            <input asp-for="Telefone" class="form-control" />
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">CPF</label>
-                            <input type="text" class="form-control" id="CPF">
+                            <label asp-for="CPF" class="form-label"></label>
+                            <input asp-for="CPF" class="form-control" />
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" id="Email">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" type="email" class="form-control" />
                         </div>
+
                         <div class="col-md-6">
-                            <label class="form-label">Endereço</label>
-                            <input type="text" class="form-control" id="endereco" placeholder="Rua Caiutí">
+                            <label asp-for="Endereco" class="form-label"></label>
+                            <input asp-for="Endereco" class="form-control" />
                         </div>
+
                         <div class="col-md-2">
-                            <label class="form-label">CEP</label>
-                            <input type="text" class="form-control" id="Cep" placeholder="05776-100">
+                            <label asp-for="CEP" class="form-label"></label>
+                            <input asp-for="CEP" class="form-control" />
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">Cidade</label>
-                            <input type="text" class="form-control" id="Cidade" placeholder="São Paulo">
+                            <label asp-for="Cidades" class="form-label"></label>
+                            <input asp-for="Cidades" class="form-control" />
                         </div>
+
                         <div class="col-md-4">
-                            <label class="form-label">Estado</label>
-                            <select id="inputState" class="form-select">
-                                <option selected disabled>Selecione o estado</option>
+                            <label asp-for="Estados" class="form-label"></label>
+                            <select asp-for="Estados" class="form-select">
+                                <option value="">Selecione</option>
                                 <option>SP</option>
                                 <option>RJ</option>
                                 <option>MG</option>
                             </select>
                         </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Nova Senha</label>
-                            <input type="password" class="form-control" id="NovSenha">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Confirmação da Nova Senha</label>
-                            <input type="password" class="form-control" id="ConNovSenha">
-                        </div>
+
                         <div class="col-12 d-grid mt-4">
                             <button type="submit" class="btn btn-secondary btn-lg">Atualizar Cadastro</button>
                         </div>

@@ -2,18 +2,18 @@
 using TccSite.Models.Entities;
 using TccSite.Models.Interfaces;
 
-namespace TccSite.Data.Repository
+namespace TccSite.Infrastructure.Repository
 {
-    public class EstadoRepository : IEstadoRepository
+    public class CidadeRepository : ICidadeRepository
     {
         private readonly DataContext _context;
 
-        public EstadoRepository(DataContext context)
+        public CidadeRepository(DataContext context)
         {
             _context = context;
         }
 
-        public Estado GetUf()
+        public Cidade GetCidade()
         {
             throw new NotImplementedException();
         }
