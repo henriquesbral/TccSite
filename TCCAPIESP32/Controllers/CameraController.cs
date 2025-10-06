@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TCCAPIESP32.Services;
-using TCCAPIESP32.Models;
+using TCCAPIESP32.Application.Services;
+using TCCAPIESP32.Domain.Entities;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TCCAPIESP32.Controllers

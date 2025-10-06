@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TCCAPIESP32.Models;
+using TCCAPIESP32.Domain.Entities;
 
-namespace TCCAPIESP32.Data
+namespace TCCAPIESP32.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {

@@ -1,6 +1,6 @@
-﻿using TccSite.Models.Entities;
+﻿using TccSite.Domain.Entities;
 
-namespace TccSite.Models.ViewModels
+namespace TccSite.Domain.ViewModels
 {
     public class UsuarioViewModel
     {

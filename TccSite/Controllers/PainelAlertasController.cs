@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TccSite.Data.Repository;
-using TccSite.Models.Interfaces;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Controllers
 {

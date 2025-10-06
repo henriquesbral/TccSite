@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TccSite.Models.Enums;
+using TccSite.Domain.Enums;
 
-namespace TccSite.Models.Entities
+namespace TccSite.Domain.Entities
 {
     public class Alerta
     {

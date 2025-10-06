@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TccSite.Data.Context;
 using TccSite.Data.Repository;
-using TccSite.Models.Interfaces;
+using TccSite.Domain.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

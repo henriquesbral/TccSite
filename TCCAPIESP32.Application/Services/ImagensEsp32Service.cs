@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
-using TCCAPIESP32.Data;
-using TCCAPIESP32.Models;
+using TCCAPIESP32.Infrastructure.Data;
+using TCCAPIESP32.Domain.Entities;
 
-namespace TCCAPIESP32.Services
+namespace TCCAPIESP32.Application.Services
 {
     public class ImagensEsp32Service
     {

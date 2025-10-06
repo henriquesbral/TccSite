@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
-using TccSite.Models.Entities;
-using TccSite.Models.Interfaces;
+using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Controllers
 {

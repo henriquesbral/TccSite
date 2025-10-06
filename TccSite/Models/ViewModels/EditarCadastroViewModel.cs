@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using TccSite.Models.Entities;
+using TccSite.Domain.Entities;
 
-namespace TccSite.Models.ViewModels
+namespace TccSite.Domain.ViewModels
 {
     public class EditarCadastroViewModel
     {

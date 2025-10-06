@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace TCCAPIESP32.Services
+namespace TCCAPIESP32.Application.Services
 {
     public class ImageProcessingService
     {

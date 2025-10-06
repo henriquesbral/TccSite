@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace TccSite.Models.Entities
+namespace TccSite.Domain.Entities
 {
     public class Cidade
     {

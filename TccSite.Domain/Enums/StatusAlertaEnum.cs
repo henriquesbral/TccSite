@@ -1,4 +1,4 @@
-﻿namespace TccSite.Models.Enums
+﻿namespace TccSite.Domain.Enums
 {
     public enum StatusAlertaEnum
     {

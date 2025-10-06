@@ -1,4 +1,4 @@
-﻿namespace TccSite.Models.ViewModels
+﻿namespace TccSite.Domain.ViewModels
 {
     public class PainelAlertaViewModel
     {

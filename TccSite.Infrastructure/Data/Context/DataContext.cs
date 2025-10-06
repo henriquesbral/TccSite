@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TccSite.Models.Entities;
+using TccSite.Domain.Entities;
 
 namespace TccSite.Data.Context
 {

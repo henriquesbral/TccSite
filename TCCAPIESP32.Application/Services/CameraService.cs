@@ -1,6 +1,8 @@
-﻿using System.Net;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Net;
 
-namespace TCCAPIESP32.Services
+namespace TCCAPIESP32.Application.Services
 {
     public class CameraService
     {

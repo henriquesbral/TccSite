@@ -1,4 +1,4 @@
-﻿namespace TccSite.Models.Entities
+﻿namespace TccSite.Domain.Entities
 {
     public class Configuracoes
     {

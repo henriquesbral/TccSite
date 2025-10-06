@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TccSite.Models.Interfaces;
-using TccSite.Models.Entities;
-using TccSite.Models.ViewModels;
-using TccSite.Models.Enums;
+using TccSite.Domain.Interfaces;
+using TccSite.Domain.Entities;
+using TccSite.Domain.ViewModels;
+using TccSite.Domain.Enums;
 
 namespace TccSite.Controllers
 {

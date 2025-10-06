@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TccSite.Models.ViewModels;
+using TccSite.Domain.ViewModels;
 
 namespace TccSite.Controllers
 {

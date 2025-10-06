@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TCCAPIESP32.Data;
-using TCCAPIESP32.Models;
-using TCCAPIESP32.Services;
+using TCCAPIESP32.Infrastructure.Data;
+using TCCAPIESP32.Domain.Entities;
+using TCCAPIESP32.Application.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
