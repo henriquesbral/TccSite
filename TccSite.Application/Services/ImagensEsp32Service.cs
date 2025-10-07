@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class ImagensEsp32Service : IImagensEsp32Service
     {
-        private readonly ImagensEsp32Repository _repo;
+        private readonly IImagensEsp32Repository _repo;
 
-        public ImagensEsp32Service(ImagensEsp32Repository repo)
+        public ImagensEsp32Service(IImagensEsp32Repository repo)
         {
             _repo = repo;
         }

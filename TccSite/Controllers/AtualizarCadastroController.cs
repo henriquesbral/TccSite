@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TccSite.Data.Context;
-using TccSite.Domain.ViewModels;
+using TccSite.Web.ViewModels;
 
 namespace TccSite.Controllers
 {

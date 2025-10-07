@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class AlertaService : IAlertaService
     {
-        private readonly AlertaRepository _repo;
-        public AlertaService(AlertaRepository repo)
+        private readonly IAlertaRepository _repo;
+        public AlertaService(IAlertaRepository repo)
         {
             _repo = repo;
         }
@@ -23,7 +23,7 @@ namespace TccSite.Application.Services
         public Alerta Get(int codAlerta) 
             => _repo.Get(codAlerta);
 
-        public List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio)
-            => _repo.BuscarDados(dataInicio, dataFim, tipoAlerta, tipoRelatorio);
+        public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim)
+            => _repo.GerarRelatorio(dataInicio, dataFim);
     }
 }

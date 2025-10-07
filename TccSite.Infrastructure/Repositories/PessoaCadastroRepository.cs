@@ -1,9 +1,10 @@
 ﻿using TccSite.Data.Context;
 using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class PessoaCadastroRepository
+    public class PessoaCadastroRepository : IPessoaCadastroRepository
     {
         private readonly DataContext _context;
 

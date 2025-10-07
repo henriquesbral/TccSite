@@ -1,8 +1,13 @@
-﻿using TccSite.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TccSite.Domain.Entities;
 
-namespace TccSite.Application.Interfaces
+namespace TccSite.Domain.Interfaces
 {
-    public interface IUsuarioService
+    public interface IUsuarioRepository
     {
         Usuario ObterAutenticar(string email, string senha);
 

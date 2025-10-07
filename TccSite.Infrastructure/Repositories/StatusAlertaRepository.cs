@@ -1,9 +1,10 @@
 ﻿using TccSite.Data.Context;
 using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class StatusAlertaRepository
+    public class StatusAlertaRepository : IStatusAlertaRepository
     {
         private readonly DataContext _context;
 

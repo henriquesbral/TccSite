@@ -1,10 +1,11 @@
 ﻿using System.Linq;
 using TccSite.Data.Context;
 using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class CidadeRepository
+    public class CidadeRepository : ICidadeRepository
     {
         private readonly DataContext _context;
 
@@ -13,7 +14,7 @@ namespace TccSite.Infrastructure.Repository
             _context = context;
         }
 
-        public List<Cidade> GetCidade()
+        public List<Cidade> GetCidades()
         {
             var cidade = _context.Cidade.ToList();
             return cidade;

@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TccSite.Data.Repository;
+using TccSite.Application.Interfaces;
 using TccSite.Domain.Interfaces;
 
 namespace TccSite.Controllers
 {
     public class PainelAlertasController : BaseController
     {
-        private readonly IAlertaRepository _alertaRepository;
+        private readonly IAlertaService _alertaService;
 
-        public PainelAlertasController(IAlertaRepository alertaRepository)
+        public PainelAlertasController(IAlertaService alertaService)
         {
-            _alertaRepository = alertaRepository ?? throw new ArgumentNullException(nameof(alertaRepository));
+            _alertaService = alertaService ?? throw new ArgumentNullException(nameof(alertaService));
         }
         public IActionResult Index()
         {
@@ -25,7 +25,7 @@ namespace TccSite.Controllers
 
             try
             {
-                var dadosRelatorioAlerta = _alertaRepository.BuscarDados(dataInicio, dataFim, tipoAlerta, tipoRelatorio);
+                var dadosRelatorioAlerta = _alertaService.GerarRelatorio(dataInicio, dataFim);
 
                 return Json(dadosRelatorioAlerta);
             }
@@ -37,13 +37,13 @@ namespace TccSite.Controllers
         }
 
         [HttpGet]
-        public JsonResult BuscarRelatorioImagens(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio)
+        public JsonResult BuscarRelatorioImagens(DateTime dataInicio, DateTime dataFim)
         {
             var res = new RetornoJson { success = false };
 
             try
             {
-                var dadosRelatorio = _alertaRepository.BuscarDados(dataInicio, dataFim, tipoAlerta, tipoRelatorio);
+                var dadosRelatorio = _alertaService.GerarRelatorio(dataInicio, dataFim);
 
                 return Json(dadosRelatorio);
             }

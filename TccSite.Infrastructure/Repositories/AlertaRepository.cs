@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq;
+using System.Text;
 using TccSite.Data.Context;
 using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class AlertaRepository
+    public class AlertaRepository : IAlertaRepository
     {
         private readonly DataContext _context;
 
@@ -20,29 +23,18 @@ namespace TccSite.Infrastructure.Repository
             return _context.Alerta.ToList();
         }
 
-        public List<Alerta> BuscarDados(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio)
+        public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim)
         {
-            using var connection = _context.Alerta.GetDbConnection();
+            var sb = new StringBuilder();
+            sb.Append("EXEC USP_GerarRelatorioAlertas");
+            sb.Append($"@DataInicio = {dataInicio}");
+            sb.Append($"@DataFim = {dataFim}");
 
-            // Abre a conexão se ainda não estiver aberta
-            if (connection.State == ConnectionState.Closed)
-                connection.Open();
+            var sql = sb.ToString();
 
-            var parametros = new
-            {
-                DataInicio = dataInicio,
-                DataFim = dataFim,
-                TipoAlerta = tipoAlerta,
-                TipoRelatorio = tipoRelatorio
-            };
+            var alertas = _context.Set<Relatorios>().FromSqlRaw(sql).AsNoTracking().ToList();
 
-            var relatorio = connection.Query<Alerta>(
-                "USP_GerarRelatorioAlertas",
-                parametros,
-                commandType: CommandType.StoredProcedure
-            ).ToList();
-
-            return relatorio;
+            return alertas;
         }
 
         public Alerta Get(int codAlerta)

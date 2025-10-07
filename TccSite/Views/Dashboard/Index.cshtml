@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TccSite.Models.Entities.Alerta>
+﻿@model IEnumerable<TccSite.Domain.Entities.Alerta>
 @{
     Layout = "_Layout";
 }
@@ -19,10 +19,10 @@
             {
                 var cor = alerta.StatusAlerta switch
                 {
-                    TccSite.Models.Enums.StatusAlertaEnum.Critico => "bg-danger text-medium",
-                    TccSite.Models.Enums.StatusAlertaEnum.Alto => "bg-danger bg-opacity-75 text-medium",
-                    TccSite.Models.Enums.StatusAlertaEnum.Medio => "bg-warning",
-                    TccSite.Models.Enums.StatusAlertaEnum.Baixo => "bg-success text-medium",
+                    TccSite.Domain.Enums.StatusAlertaEnum.Critico => "bg-danger text-medium",
+                    TccSite.Domain.Enums.StatusAlertaEnum.Alto => "bg-danger bg-opacity-75 text-medium",
+                    TccSite.Domain.Enums.StatusAlertaEnum.Medio => "bg-warning",
+                    TccSite.Domain.Enums.StatusAlertaEnum.Baixo => "bg-success text-medium",
                     _ => "bg-secondary"
                 };
 

@@ -5,29 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Domain.ViewModels;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class UsuarioService : IUsuarioService
     {
-        private readonly UsuarioRepository _repo;
-        public UsuarioService(UsuarioRepository repo)
+        private readonly IUsuarioRepository _repo;
+        public UsuarioService(IUsuarioRepository repo)
         {
             _repo = repo;
         }
-        public Task AdicionarUsuarioAsync(Usuario usuario)
-            => _repo.AdicionarUsuarioAsync(usuario);
-
-        public Task AtualizarUsuarioAsync(Usuario usuario)
-            => _repo.AtualizarUsuarioAsync(usuario);
-
-        //public Task<UsuarioViewModel> GetUsuarioByIdAsync(int id)
-        //    => _repo.GetUsuarioByIdAsync(id);
-
-        //public Task<List<UsuarioViewModel>> GetUsuariosAsync()
-        //    => _repo.GetUsuariosAsync();
 
         public Usuario ObterAutenticar(string email, string senha)
             => _repo.ObterAutenticar(email, senha);
@@ -35,7 +23,16 @@ namespace TccSite.Application.Services
         public Usuario ObterUsuario(int codUsuario)
             => _repo.ObterUsuario(codUsuario);
 
-        public Task RemoverUsuarioAsync(int id)
-            => _repo.RemoverUsuarioAsync(id);
+        public List<Usuario> GetUsuarios()
+            => _repo.GetUsuarios();
+
+        public void AdicionarUsuario(Usuario usuario)
+            => _repo.AdicionarUsuario(usuario);
+
+        public void AtualizarUsuario(Usuario usuario)
+            => _repo.AtualizarUsuario(usuario);
+
+        public void RemoverUsuario(int id)
+            => _repo.RemoverUsuario(id);
     }
 }

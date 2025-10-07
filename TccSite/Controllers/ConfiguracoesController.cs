@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TccSite.Domain.Entities;
 using TccSite.Domain.Interfaces;
-using TccSite.Domain.ViewModels;
+using TccSite.Web.ViewModels;
 
 namespace TccSite.Controllers
 {
-    public class ConfiguracoesController : Controller
+    public class ConfiguracoesController : BaseController
     {
         private readonly IConfiguracoesRepository _context;
 
@@ -32,7 +32,7 @@ namespace TccSite.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Salvar(ConfiguracoesViewModel vm)
+        public IActionResult Salvar(ConfiguracoesViewModel vm)
         {
             if (!ModelState.IsValid)
                 return View("Index", vm);
@@ -47,7 +47,7 @@ namespace TccSite.Controllers
                 FrequenciaCaptura = vm.FrequenciaCaptura
             };
 
-            await _context.AtualizarConfiguracaoAsync(config);
+            _context.AtualizarConfiguracao(config);
 
             TempData["Mensagem"] = "Configurações salvas com sucesso!";
             return RedirectToAction("Index");

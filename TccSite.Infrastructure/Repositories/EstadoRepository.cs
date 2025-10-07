@@ -1,9 +1,10 @@
 ﻿using TccSite.Data.Context;
 using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class EstadoRepository
+    public class EstadoRepository : IEstadoRepository
     {
         private readonly DataContext _context;
 

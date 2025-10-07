@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class CidadeService : ICidadeService
     {
-        private readonly CidadeRepository _repo;
-        public CidadeService(CidadeRepository repo)
+        private readonly ICidadeRepository _repo;
+        public CidadeService(ICidadeRepository repo)
         {
             _repo = repo;
         }
 
-        public List<Cidade> GetCidade() 
-            => _repo.GetCidade();
+        public List<Cidade> GetCidades() 
+            => _repo.GetCidades();
 
         public Cidade GetCidadePorId(int id) 
             => _repo.GetCidadePorId(id);

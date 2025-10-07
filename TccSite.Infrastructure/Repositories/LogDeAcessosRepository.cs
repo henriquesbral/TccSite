@@ -1,10 +1,11 @@
 ﻿using TccSite.Data.Context;
 using TccSite.Domain.Entities;
 using System.Linq;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class LogDeAcessosRepository
+    public class LogDeAcessosRepository : ILogDeAcessosRepository
     {
         private readonly DataContext _context;
 

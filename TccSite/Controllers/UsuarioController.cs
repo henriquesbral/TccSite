@@ -1,32 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TccSite.Domain.Interfaces;
-using TccSite.Domain.ViewModels;
+using TccSite.Application.Interfaces;
+using TccSite.Web.ViewModels;
 
 namespace TccSite.Controllers
 {
     public class UsuarioController : Controller
     {
-        private readonly IUsuarioRepository _context;
+        private readonly IUsuarioService _context;
 
-        public UsuarioController(IUsuarioRepository context)
+        public UsuarioController(IUsuarioService context)
         {
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var usuarios = await _context.GetUsuariosAsync();
+            var usuarios = _context.GetUsuarios();
             return View(usuarios);
-        }
-
-        public async Task<IActionResult> Edit(int id)
-        {
-            var usuario = await _context.GetUsuarioByIdAsync(id);
-            if (usuario == null)
-                return NotFound();
-
-            return View(usuario);
         }
 
         [HttpPost]
@@ -48,14 +39,14 @@ namespace TccSite.Controllers
             usuario.PessoaCadastro.CPF = vm.CPF;
             usuario.PessoaCadastro.Telefone = vm.Telefone;
 
-            _context.AtualizarUsuarioAsync(usuario);
+            _context.AtualizarUsuario(usuario);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult Delete(int codUsuario)
         {
-            _context.RemoverUsuarioAsync(codUsuario);
+            _context.RemoverUsuario(codUsuario);
             return RedirectToAction("Index");
         }
     }

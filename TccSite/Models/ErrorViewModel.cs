@@ -1,4 +1,4 @@
-namespace TccSite.Domain
+namespace TccSite.Web
 {
     public class ErrorViewModel
     {

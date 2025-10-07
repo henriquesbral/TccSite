@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class PessoaCadastroService : IPessoaCadastroService
     {
-        private readonly PessoaCadastroRepository _repo;
+        private readonly IPessoaCadastroRepository _repo;
 
-        public PessoaCadastroService(PessoaCadastroRepository repo)
+        public PessoaCadastroService(IPessoaCadastroRepository repo)
         {
             _repo = repo;
         }

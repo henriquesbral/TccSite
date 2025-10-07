@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TccSite.Domain.Interfaces;
-using TccSite.Domain.Entities;
-using TccSite.Domain.ViewModels;
+using TccSite.Application.Interfaces;
 using TccSite.Domain.Enums;
+using TccSite.Web.ViewModels;
+
 
 namespace TccSite.Controllers
 {
     public class DashboardController : Controller
     {
-        private readonly IAlertaRepository _alertaRepository;
+        private readonly IAlertaService _alertaService;
 
-        public DashboardController(IAlertaRepository alertaRepository)
+        public DashboardController(IAlertaService alertaService)
         {
-            _alertaRepository = alertaRepository;
+            _alertaService = alertaService;
         }
 
         public IActionResult Index()
         {
-            var alertas = _alertaRepository.BuscarAlertas().Where(alerta => alerta.Ativo == "1").OrderByDescending(x => x.DataCadastro).ToList();
+            var alertas = _alertaService.BuscarAlertas().Where(alerta => alerta.Ativo == "1").OrderByDescending(x => x.DataCadastro).ToList();
 
             return View(alertas);
         }
@@ -25,7 +25,7 @@ namespace TccSite.Controllers
         [HttpGet]
         public JsonResult Alerta()
         {
-            var dados = _alertaRepository.BuscarAlertas();
+            var dados = _alertaService.BuscarAlertas();
 
             var data = dados
                 .Select(x => new AlertaGraficoViewModel

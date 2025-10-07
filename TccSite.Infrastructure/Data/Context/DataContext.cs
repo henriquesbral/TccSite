@@ -28,5 +28,15 @@ namespace TccSite.Data.Context
 
         #endregion
 
+        #region OnModelCreating
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Relatorios>().HasNoKey();
+        }
+
+        #endregion
+
     }
 }

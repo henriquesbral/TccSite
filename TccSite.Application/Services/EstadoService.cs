@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class EstadoService : IEstadoService
     {
-        private readonly EstadoRepository _repo;
+        private readonly IEstadoRepository _repo;
 
-        public EstadoService(EstadoRepository repo)
+        public EstadoService(IEstadoRepository repo)
         {
             _repo = repo;
         }

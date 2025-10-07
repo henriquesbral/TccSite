@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TccSite.Data.Context;
-using TccSite.Data.Repository;
 using TccSite.Domain.Interfaces;
+using TccSite.Infrastructure.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +24,7 @@ builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
 builder.Services.AddScoped<IStatusAlertaRepository, StatusAlertaRepository>();
 builder.Services.AddScoped<IPessoaCadastroRepository, PessoaCadastroRepository>();
 builder.Services.AddScoped<ILogDeAcessosRepository, LogDeAcessosRepository>();
-builder.Services.AddScoped<IImagemStatusRepository, ImagemStatusRepository>();
+builder.Services.AddScoped<IImagensEsp32Repository, ImagensEsp32Repository>();
 builder.Services.AddScoped<IConfiguracoesRepository, ConfiguracoesRepository>();
 
 

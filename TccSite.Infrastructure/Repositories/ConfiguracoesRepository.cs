@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TccSite.Data.Context;
 using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class ConfiguracoesRepository 
+    public class ConfiguracoesRepository : IConfiguracoesRepository
     {
         private readonly DataContext _context;
 
@@ -13,13 +14,13 @@ namespace TccSite.Infrastructure.Repository
             _context = context;
         }
 
-        public Configuracoes GetConfiguracaoAsync()
+        public Configuracoes GetConfiguracao()
         {
             var configuracoes = _context.Configuracoes.LastOrDefault();
             return configuracoes;
         }
 
-        public void AtualizarConfiguracaoAsync(Configuracoes config)
+        public void AtualizarConfiguracao(Configuracoes config)
         {
             _context.Configuracoes.Update(config);
             _context.SaveChangesAsync();

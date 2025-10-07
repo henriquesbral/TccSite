@@ -4,9 +4,9 @@ namespace TccSite.Application.Interfaces
 {
     public interface IConfiguracoesService
     {
-        Configuracoes GetConfiguracaoAsync();
+        Configuracoes GetConfiguracao();
 
-        void AtualizarConfiguracaoAsync(Configuracoes config);
+        void AtualizarConfiguracao(Configuracoes config);
     }
 
 }

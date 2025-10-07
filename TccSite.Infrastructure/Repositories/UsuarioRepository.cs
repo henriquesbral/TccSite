@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TccSite.Data.Context;
 using TccSite.Domain.Entities;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Infrastructure.Repository
 {
-    public class UsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
         private readonly DataContext _context;
 
@@ -22,65 +23,30 @@ namespace TccSite.Infrastructure.Repository
             return _context.Usuario.Where(x => x.CodUsuario == codUsuario).FirstOrDefault();
         }
 
-        //public async Task<List<UsuarioViewModel>> GetUsuariosAsync()
-        //{
-        //    return await _context.Usuario
-        //        .Include(u => u.PessoaCadastro)
-        //        .Select(u => new UsuarioViewModel
-        //        {
-        //            CodUsuario = u.CodUsuario,
-        //            Nome = u.PessoaCadastro.Nome,
-        //            Sobrenome = u.PessoaCadastro.Sobrenome,
-        //            CPF = u.PessoaCadastro.CPF,
-        //            Telefone = u.PessoaCadastro.Telefone,
-        //            Email = u.Email,
-        //            CodPerfilUsuario = u.CodPerfilUsuario,
-        //            Ativo = u.Ativo,
-        //            DataCadastro = u.DataCadastro
-        //        }).ToListAsync();
-        //}
+        public List<Usuario> GetUsuarios()
+        {
+            return _context.Usuario.ToList();
+        }
 
-        //public async Task<UsuarioViewModel> GetUsuarioByIdAsync(int id)
-        //{
-        //    var u = await _context.Usuario
-        //        .Include(x => x.PessoaCadastro)
-        //        .FirstOrDefaultAsync(x => x.CodUsuario == id);
-
-        //    if (u == null) return null;
-
-        //    return new UsuarioViewModel
-        //    {
-        //        CodUsuario = u.CodUsuario,
-        //        Nome = u.PessoaCadastro.Nome,
-        //        Sobrenome = u.PessoaCadastro.Sobrenome,
-        //        CPF = u.PessoaCadastro.CPF,
-        //        Telefone = u.PessoaCadastro.Telefone,
-        //        Email = u.Email,
-        //        CodPerfilUsuario = u.CodPerfilUsuario,
-        //        Ativo = u.Ativo,
-        //        DataCadastro = u.DataCadastro
-        //    };
-        //}
-
-        public async Task AdicionarUsuarioAsync(Usuario usuario)
+        public void AdicionarUsuario(Usuario usuario)
         {
             _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
-        public async Task AtualizarUsuarioAsync(Usuario usuario)
+        public void AtualizarUsuario(Usuario usuario)
         {
             _context.Usuario.Update(usuario);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
-        public async Task RemoverUsuarioAsync(int id)
+        public void RemoverUsuario(int id)
         {
-            var usuario = await _context.Usuario.FindAsync(id);
+            var usuario = _context.Usuario.Find(id);
             if (usuario != null)
             {
                 _context.Usuario.Remove(usuario);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
         }
 

@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class StatusAlertaService : IStatusAlertaService
     {
-        private readonly StatusAlertaRepository _repo;
+        private readonly IStatusAlertaRepository _repo;
 
-        public StatusAlertaService(StatusAlertaRepository repo)
+        public StatusAlertaService(IStatusAlertaRepository repo)
         {
             _repo = repo;
         }

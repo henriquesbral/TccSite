@@ -5,23 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class ConfiguracoesService : IConfiguracoesService
     {
-        private readonly ConfiguracoesRepository _repo;
+        private readonly IConfiguracoesRepository _repo;
 
-        public ConfiguracoesService(ConfiguracoesRepository repo)
+        public ConfiguracoesService(IConfiguracoesRepository repo)
         {
             _repo = repo;
         }
 
-        public Configuracoes GetConfiguracaoAsync()
-            => _repo.GetConfiguracaoAsync();
+        public Configuracoes GetConfiguracao()
+            => _repo.GetConfiguracao();
 
-        public void AtualizarConfiguracaoAsync(Configuracoes configuracoes)
-            => _repo.AtualizarConfiguracaoAsync(configuracoes);
+        public void AtualizarConfiguracao(Configuracoes configuracoes)
+            => _repo.AtualizarConfiguracao(configuracoes);
     }
 }

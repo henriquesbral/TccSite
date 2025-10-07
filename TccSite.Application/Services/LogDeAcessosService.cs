@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Infrastructure.Repository;
+using TccSite.Domain.Interfaces;
 
 namespace TccSite.Application.Services
 {
     public class LogDeAcessosService : ILogDeAcessosService
     {
-        private readonly LogDeAcessosRepository _repo;
+        private readonly ILogDeAcessosRepository _repo;
 
-        public LogDeAcessosService(LogDeAcessosRepository repo)
+        public LogDeAcessosService(ILogDeAcessosRepository repo)
         {
             _repo = repo;
         }
