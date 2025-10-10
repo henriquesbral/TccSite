@@ -9,7 +9,15 @@ namespace TccSite.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddTransient<IAlertaService, AlertaService>();
+            services.AddScoped<IAlertaService, AlertaService>();
+            services.AddScoped<ICidadeService, CidadeService>();
+            services.AddScoped<IConfiguracoesService, ConfiguracoesService>();
+            services.AddScoped<IEstadoService, EstadoService>();
+            services.AddScoped<IImagensEsp32Service, ImagensEsp32Service>();
+            services.AddScoped<ILogDeAcessosService, LogDeAcessosService>();
+            services.AddScoped<IPessoaCadastroService, PessoaCadastroService>();
+            services.AddScoped<IStatusAlertaService, StatusAlertaService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
 
             return services;
         }

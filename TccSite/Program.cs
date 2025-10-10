@@ -1,43 +1,24 @@
-using Microsoft.EntityFrameworkCore;
-using TccSite.Data.Context;
-using TccSite.Domain.Interfaces;
-using TccSite.Infrastructure.Repository;
+using TccSite.Application;
+using TccSite.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// =======================
-// Service Configuration
-// =======================
-
-// Add MVC with views
+// Add MVC
 builder.Services.AddControllersWithViews();
 
-// Configure Entity Framework Core with SQL Server
-builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Register application repositories (Dependency Injection)
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<IAlertaRepository, AlertaRepository>();
-builder.Services.AddScoped<ICidadeRepository, CidadeRepository>();
-builder.Services.AddScoped<IEstadoRepository, EstadoRepository>();
-builder.Services.AddScoped<IStatusAlertaRepository, StatusAlertaRepository>();
-builder.Services.AddScoped<IPessoaCadastroRepository, PessoaCadastroRepository>();
-builder.Services.AddScoped<ILogDeAcessosRepository, LogDeAcessosRepository>();
-builder.Services.AddScoped<IImagensEsp32Repository, ImagensEsp32Repository>();
-builder.Services.AddScoped<IConfiguracoesRepository, ConfiguracoesRepository>();
-
+// Add Application and Infrastructure layers
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
 // =======================
 // Middleware Pipeline
 // =======================
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    app.UseHsts(); // Enforces HTTPS in production
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -47,7 +28,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Define default route pattern
+// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");
