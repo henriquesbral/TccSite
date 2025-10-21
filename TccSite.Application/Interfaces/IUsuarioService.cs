@@ -4,9 +4,11 @@ namespace TccSite.Application.Interfaces
 {
     public interface IUsuarioService
     {
-        Usuario ObterAutenticar(string email, string senha);
+        Usuario ObterAutenticar(string email);
 
         Usuario ObterUsuario(int codUsuario);
+
+        Usuario ObterUsuarioPorCPF(string cpf);
 
         List<Usuario> GetUsuarios();
 

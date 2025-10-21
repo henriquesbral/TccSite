@@ -1,56 +1,63 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TccSite.Application.Interfaces;
 using TccSite.Domain.Entities;
-using TccSite.Domain.Interfaces;
 using TccSite.Web.ViewModels;
 
 namespace TccSite.Controllers
 {
     public class ConfiguracoesController : BaseController
     {
-        private readonly IConfiguracoesRepository _context;
+        private readonly IConfiguracoesService _configuracoesService;
 
-        public ConfiguracoesController(IConfiguracoesRepository context)
+        public ConfiguracoesController(IConfiguracoesService configuracoesService)
         {
-            _context = context;
+            _configuracoesService = configuracoesService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            //var config = await _context.GetConfiguracaoAsync();
+            var config = _configuracoesService.GetConfiguracao();
 
-            //var vm = new ConfiguracoesViewModel
-            //{
-            //    LimiteAlertaBaixo = config.LimiteAlertaBaixo,
-            //    LimiteAlertaMedio = config.LimiteAlertaMedio,
-            //    LimiteAlertaAlto = config.LimiteAlertaAlto,
-            //    FrequenciaCapturaMinutos = config.FrequenciaCapturaMinutos,
-            //    NotificacaoEmail = config.NotificacaoEmail,
-            //    NotificacaoWhatsapp = config.NotificacaoWhatsapp
-            //};
+            var configuracoes = new ConfiguracoesViewModel
+            {
+                LimiteAlertaBaixo = config.LimiteAlertaBaixo,
+                LimiteAlertaMedio = config.LimiteAlertaMedio,
+                LimiteAlertaAlto = config.LimiteAlertaAlto,
+                FrequenciaCaptura = config.FrequenciaCaptura,
+                NotificarEmail = config.NotificarEmail,
+                NotificacaoWhatsapp = config.NotificacaoWhatsapp
+            };
 
-            return View();
+            return View(configuracoes);
         }
 
         [HttpPost]
-        public IActionResult Salvar(ConfiguracoesViewModel vm)
+        public IActionResult Salvar(ConfiguracoesViewModel newConfig)
         {
-            if (!ModelState.IsValid)
-                return View("Index", vm);
-
-            var config = new Configuracoes
+            try
             {
-                Id = 1, // se sempre existir apenas um registro de configuração
-                LimiteAlertaBaixo = vm.LimiteAlertaBaixo,
-                LimiteAlertaMedio = vm.LimiteAlertaMedio,
-                LimiteAlertaAlto = vm.LimiteAlertaAlto,
-                LimiteAlertaCritico = vm.LimiteAlertaCritico,
-                FrequenciaCaptura = vm.FrequenciaCaptura
-            };
+                if (!ModelState.IsValid)
+                    return View("Index", newConfig);
 
-            _context.AtualizarConfiguracao(config);
+                var config = new Configuracoes
+                {
+                    LimiteAlertaBaixo = newConfig.LimiteAlertaBaixo,
+                    LimiteAlertaMedio = newConfig.LimiteAlertaMedio,
+                    LimiteAlertaAlto = newConfig.LimiteAlertaAlto,
+                    LimiteAlertaCritico = newConfig.LimiteAlertaCritico,
+                    FrequenciaCaptura = newConfig.FrequenciaCaptura,
+                    NotificacaoWhatsapp = newConfig.NotificacaoWhatsapp,
+                    NotificarEmail = newConfig.NotificarEmail
+                };
 
-            TempData["Mensagem"] = "Configurações salvas com sucesso!";
-            return RedirectToAction("Index");
+                _configuracoesService.AtualizarConfiguracao(config);
+
+                return Json(new {success = true, message = "Configurações salvas com sucesso!" });
+            }
+            catch (Exception ex) 
+            {
+                return Json(new {success = false, message = $"Ocorreu um erro ao salvar as configurações: {ex.Message}" });
+            }
         }
     }
 

@@ -1,58 +1,44 @@
 ﻿$(document).ready(function () {
-    $("#Login").on("click", function (event) {
+    $("#Login").on("click", async function (event) {
         event.preventDefault();
-
+debugger
         const email = $("#email").val().trim();
         const senha = $("#senha").val().trim();
 
-        if (email === "") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "O email não pode ser vazio!"
-            });
-            return;
+        if (!email) {
+            return Swal.fire("Erro", "O email não pode ser vazio!", "error");
         }
 
-        if (senha === "") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "A senha não pode ser vazia!"
-            });
-            return;
+        if (!senha) {
+            return Swal.fire("Erro", "A senha não pode ser vazia!", "error");
         }
 
-        // Criando o objeto para envio em JSON
-        const data = {
-            email: email,
-            senha: senha
-        };
+        try {
+            const response = await $.ajax({
+                url: '/Login/Autenticar',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ email, senha }),
+                dataType: 'json'
+            });
 
-        $.ajax({
-            url: '/Login/Autenticar',
-            type: 'POST',
-            contentType: 'application/json', // Envia como JSON
-            data: JSON.stringify(data),      // Converte para JSON string
-            dataType: 'json',
-            success: function (response) {
-                console.log("Resposta do servidor:", response); // Debug
-
-                if (response.success) {
+            if (response.success) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Bem-vindo!",
+                    text: response.msg,
+                    timer: 1200,
+                    showConfirmButton: false
+                }).then(() => {
                     window.location.href = "/Dashboard";
-                } else {
-                    Swal.fire("Erro", response.msg || "Credenciais inválidas", "error");
-                }
-            },
-            error: function (xhr) {
-                console.error("Erro na requisição:", xhr.responseText);
-                Swal.fire("Erro", "Falha na comunicação com o servidor.", "error");
-            },
-            complete: function () {
-                $("#Login").show();
-                $("#loader").hide(); // Se tiver um loader
+                });
+            } else {
+                Swal.fire("Erro", response.msg || "Credenciais inválidas", "error");
             }
-        });
+        } catch (xhr) {
+            console.error("Erro na requisição:", xhr.responseText);
+            Swal.fire("Erro", "Falha na comunicação com o servidor.", "error");
+        }
     });
 });
 

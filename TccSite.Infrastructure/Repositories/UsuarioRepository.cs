@@ -14,18 +14,27 @@ namespace TccSite.Infrastructure.Repository
             _context = context;
         }
 
-        public Usuario ObterAutenticar(string email, string senha)
+        public Usuario ObterAutenticar(string email)
         {
-            return _context.Usuario.Where(x => x.Email == email && x.Senha == senha).FirstOrDefault();
+            return _context.Usuario.Where(x => x.Email == email).FirstOrDefault();
         }
+
         public Usuario ObterUsuario(int codUsuario)
         {
             return _context.Usuario.Where(x => x.CodUsuario == codUsuario).FirstOrDefault();
         }
 
+        public Usuario ObterUsuarioPorCPF(string cpf)
+        {
+            return _context.Usuario.FromSqlRaw(
+                "SELECT U.* FROM Usuario U " +
+                "INNER JOIN PessoaCadastro PC ON PC.CodPessoaCadastro = U.CodPessoaCadastro " +
+                "WHERE CPF = {0}", cpf).FirstOrDefault();
+        }
+
         public List<Usuario> GetUsuarios()
         {
-            return _context.Usuario.ToList();
+            return _context.Usuario.FromSqlRaw("EXECUTE usp_BuscarUsuarios").ToList();
         }
 
         public void AdicionarUsuario(Usuario usuario)

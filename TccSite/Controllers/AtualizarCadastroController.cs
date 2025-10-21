@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TccSite.Application.Interfaces;
 using TccSite.Data.Context;
 using TccSite.Web.ViewModels;
 
@@ -7,44 +8,18 @@ namespace TccSite.Controllers
     public class AtualizarCadastroController : BaseController
     {
         private readonly DataContext _context;
-        private readonly IWebHostEnvironment _env;
+        private readonly IUsuarioService _usuarioService;
 
-        public AtualizarCadastroController(DataContext context, IWebHostEnvironment env)
+        public AtualizarCadastroController(DataContext context, IUsuarioService usuarioService)
         {
             _context = context;
-            _env = env;
+            _usuarioService = usuarioService;
         }
 
         [HttpGet]
         public IActionResult Index(int codUsuario)
         {
-            var usuario = _context.Usuario
-                .Where(u => u.CodUsuario == codUsuario)
-                .Select(u => new EditarCadastroViewModel
-                {
-                    CodUsuario = u.CodUsuario,
-                    CodPessoaCadastro = u.CodPessoaCadastro,
-                    Nome = u.PessoaCadastro.Nome,
-                    Sobrenome = u.PessoaCadastro.Sobrenome,
-                    CPF = u.PessoaCadastro.CPF,
-                    Telefone = u.PessoaCadastro.Telefone,
-                    Endereco = u.PessoaCadastro.Endereco,
-                    CEP = u.PessoaCadastro.CEP,
-                    CodCidade = u.PessoaCadastro.CodCidade,
-                    Email = u.Email,
-                    ImagemUrl = "/Assets/imagens/user.jpeg" // ou campo se tiver imagem salva
-                }).FirstOrDefault();
-
-            if (usuario == null) return NotFound();
-
-            usuario.Estados = _context.Estado.ToList();
-            //usuario.Cidades = _context.Cidade
-            //    .Where(c => c.CodEstado == _context.Cidade.FirstOrDefault(x => x.CodCidade == usuario.CodCidade)?.CodEstado)
-            //    .ToList();
-
-            usuario.CodEstadoSelecionado = usuario.Cidades.FirstOrDefault()?.CodEstado ?? 0;
-
-            return View(usuario);
+            return View(codUsuario);
         }
 
         [HttpPost]
@@ -74,17 +49,17 @@ namespace TccSite.Controllers
             // Upload da imagem
             if (vm.ImagemPerfil != null)
             {
-                var pasta = Path.Combine(_env.WebRootPath, "uploads");
-                if (!Directory.Exists(pasta))
-                    Directory.CreateDirectory(pasta);
+                //var pasta = Path.Combine(_env.WebRootPath, "uploads");
+                //if (!Directory.Exists(pasta))
+                //    Directory.CreateDirectory(pasta);
 
-                var nomeArquivo = $"{Guid.NewGuid()}{Path.GetExtension(vm.ImagemPerfil.FileName)}";
-                var caminho = Path.Combine(pasta, nomeArquivo);
+                //var nomeArquivo = $"{Guid.NewGuid()}{Path.GetExtension(vm.ImagemPerfil.FileName)}";
+                //var caminho = Path.Combine(pasta, nomeArquivo);
 
-                using (var stream = new FileStream(caminho, FileMode.Create))
-                {
-                    vm.ImagemPerfil.CopyTo(stream);
-                }
+                //using (var stream = new FileStream(caminho, FileMode.Create))
+                //{
+                //    vm.ImagemPerfil.CopyTo(stream);
+                //}
 
                 // Salvar caminho da imagem (pode criar campo na PessoaCadastro ou Usuario)
                 // Exemplo: pessoa.ImagemUrl = $"/uploads/{nomeArquivo}";

@@ -8,9 +8,11 @@ namespace TccSite.Web.ViewModels
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string CPF { get; set; }
+        public string CEP { get; set; }
         public string Telefone { get; set; }
         public string Email { get; set; }
         public int CodPerfilUsuario { get; set; }
+        public int CodCidade { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataCadastro { get; set; }
     }

@@ -18,6 +18,7 @@ namespace TccSite.Application
             services.AddScoped<IPessoaCadastroService, PessoaCadastroService>();
             services.AddScoped<IStatusAlertaService, StatusAlertaService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IUsuarioSenhaService, UsuarioSenhaService>();
 
             return services;
         }

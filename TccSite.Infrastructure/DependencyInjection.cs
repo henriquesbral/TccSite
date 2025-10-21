@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TccSite.Data.Context;
-using Microsoft.EntityFrameworkCore;
 using TccSite.Domain.Interfaces;
+using TccSite.Infrastructure.Repositories;
 using TccSite.Infrastructure.Repository;
 
 namespace TccSite.Infrastructure
@@ -23,6 +24,7 @@ namespace TccSite.Infrastructure
             services.AddScoped<IPessoaCadastroRepository, PessoaCadastroRepository>();
             services.AddScoped<IStatusAlertaRepository, StatusAlertaRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioSenhaRepository, UsuarioSenhaRepository>();
 
             return services;
         }

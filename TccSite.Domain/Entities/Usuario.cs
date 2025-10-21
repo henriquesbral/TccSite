@@ -13,8 +13,6 @@ namespace TccSite.Domain.Entities
 
         public string Email { get; set; }
 
-        public string Senha { get; set; }
-
         public int CodPerfilUsuario { get; set; }
 
         public bool Ativo { get; set; }

@@ -17,11 +17,13 @@ namespace TccSite.Application.Services
             _repo = repo;
         }
 
-        public Usuario ObterAutenticar(string email, string senha)
-            => _repo.ObterAutenticar(email, senha);
+        public Usuario ObterAutenticar(string email)
+            => _repo.ObterAutenticar(email);
 
         public Usuario ObterUsuario(int codUsuario)
             => _repo.ObterUsuario(codUsuario);
+        public Usuario ObterUsuarioPorCPF(string cpf)
+            => _repo.ObterUsuarioPorCPF(cpf);
 
         public List<Usuario> GetUsuarios()
             => _repo.GetUsuarios();
