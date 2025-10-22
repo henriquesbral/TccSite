@@ -36,5 +36,8 @@ namespace TccSite.Application.Services
 
         public void RemoverUsuario(int id)
             => _repo.RemoverUsuario(id);
+
+        public Usuario ObterUsuarioPorEmail(string email)
+            => _repo.ObterUsuarioPorEmail(email);
     }
 }

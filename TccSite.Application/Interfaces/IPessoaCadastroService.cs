@@ -7,5 +7,7 @@ namespace TccSite.Application.Interfaces
         PessoaCadastro Obter(int id);
 
         void AtualizarPessoaCadastro(PessoaCadastro pessoa);
+
+        void AdicionarPessoaCadastro(PessoaCadastro pessoa);
     }
 }

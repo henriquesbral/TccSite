@@ -21,6 +21,9 @@ namespace TccSite.Application.Services
         public void AtualizarPessoaCadastro(PessoaCadastro pessoa)
             => _repo.AtualizarPessoaCadastro(pessoa);
 
+        public void AdicionarPessoaCadastro(PessoaCadastro pessoa)
+            => _repo.AdicionarPessoaCadastro(pessoa);
+
         public PessoaCadastro Obter(int id) 
             => _repo.Obter(id);
     }

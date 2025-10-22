@@ -59,5 +59,9 @@ namespace TccSite.Infrastructure.Repository
             }
         }
 
+        public Usuario ObterUsuarioPorEmail(string email)
+        {
+            return _context.Usuario.Where(e => e.Email == email).FirstOrDefault();
+        }
     }
 }

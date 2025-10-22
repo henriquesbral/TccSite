@@ -12,5 +12,7 @@ namespace TccSite.Domain.Interfaces
         PessoaCadastro Obter(int id);
 
         void AtualizarPessoaCadastro(PessoaCadastro pessoa);
+
+        void AdicionarPessoaCadastro(PessoaCadastro pessoa);
     }
 }

@@ -10,6 +10,8 @@ namespace TccSite.Application.Interfaces
 
         Usuario ObterUsuarioPorCPF(string cpf);
 
+        Usuario ObterUsuarioPorEmail(string email);
+
         List<Usuario> GetUsuarios();
 
         void AdicionarUsuario(Usuario usuario);
