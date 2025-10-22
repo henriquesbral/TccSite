@@ -1,4 +1,4 @@
-﻿jQuery(document).ready(function ($) {
+﻿$(document).ready(function () {
     $("#Login").on("click", async function (event) {
         event.preventDefault();
 
@@ -43,5 +43,5 @@
 });
 
 function Cadastrar() {
-    location.href = "/Cadastrar";
+    window.location.href = "/Cadastrar";
 }

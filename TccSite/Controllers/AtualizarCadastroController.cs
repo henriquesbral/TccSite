@@ -35,12 +35,12 @@ namespace TccSite.Controllers
             var usuario = _usuarioService.ObterUsuario(codUsuario);
             var pessoa = _pessoaService.Obter(usuario.CodPessoaCadastro);
 
-            // Converte caminho físico para URL
-            string imagemUrl = null;
+            // Converte caminho físico para URL pública
+            string imagemUrl = Url.Content("~/Assets/imagens/user.jpeg"); // padrão
             if (!string.IsNullOrEmpty(pessoa.CaminhoImagemUsuario))
             {
                 var nomeArquivo = Path.GetFileName(pessoa.CaminhoImagemUsuario);
-                imagemUrl = $"/ImagensUsuarios/{nomeArquivo}";
+                imagemUrl = $"/ImagensUsuarios/{nomeArquivo}"; // URL pública
             }
 
             var retorno = new UsuarioCadastroViewModel
@@ -71,16 +71,15 @@ namespace TccSite.Controllers
             if (!ModelState.IsValid)
                 return View("Index", user);
 
-            // Atualiza pessoa e retorna resultado
             var pessoaAtualizada = AtualizaCadastro(user);
 
-            // Atualiza imagem se houver novo upload
+            // Atualiza imagem se houver upload
             if (user.ImagemPerfil != null)
             {
-                var novaImagemUrl = AtualizaImagem(user.ImagemPerfil);
-                if (!string.IsNullOrEmpty(novaImagemUrl))
+                var nomeArquivo = AtualizaImagem(user.ImagemPerfil);
+                if (!string.IsNullOrEmpty(nomeArquivo))
                 {
-                    pessoaAtualizada.CaminhoImagemUsuario = novaImagemUrl;
+                    pessoaAtualizada.CaminhoImagemUsuario = nomeArquivo;
                 }
             }
 
@@ -97,8 +96,16 @@ namespace TccSite.Controllers
             var usuario = _usuarioService.ObterUsuario(codUsuario);
             var pessoa = _pessoaService.Obter(usuario.CodPessoaCadastro);
 
-            return Json(new { imagemUrl = pessoa.CaminhoImagemUsuario });
+            string imagemUrl = Url.Content("~/Assets/imagens/user.jpeg"); // padrão
+            if (!string.IsNullOrEmpty(pessoa.CaminhoImagemUsuario))
+            {
+                var nomeArquivo = Path.GetFileName(pessoa.CaminhoImagemUsuario);
+                imagemUrl = $"/ImagensUsuarios/{nomeArquivo}";
+            }
+
+            return Json(new { imagemUrl });
         }
+
 
         [HttpGet]
         public JsonResult ObterEstados()
@@ -156,17 +163,13 @@ namespace TccSite.Controllers
             var nomeArquivo = $"foto_{DateTime.Now:yyyyMMdd_HHmmss}{extensao}";
             var caminhoCompleto = Path.Combine(pastaDestino, nomeArquivo);
 
-            // Salva o arquivo
             using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
             {
                 imagem.CopyTo(stream);
             }
 
-            // Caminho relativo para salvar no banco
-            var caminhoRelativo = Path.Combine(_pastaImagens.Replace("wwwroot", ""), nomeArquivo)
-                                  .Replace("\\", "/");
-
-            return caminhoRelativo;
+            // Retorna apenas o nome do arquivo
+            return nomeArquivo;
         }
     }
 }

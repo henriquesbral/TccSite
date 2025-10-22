@@ -1,55 +1,102 @@
-﻿<!doctype html>
-<html lang="pt-br">
+﻿@model TccSite.Web.ViewModels.UsuarioCadastroViewModel
+@{
+    Layout = "_Layout";
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Monitoramento Córrego</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
-</head>
+    // Checa se o usuário logado é administrador
+    bool isAdmin = User.IsInRole("Administrador");
+}
 
-<body>
-    <main class="container">
-        <img src="/Assets/imagens/enchente.png" alt="ImagemPlanetaTerra" width="312" height="312">
-        <h3 style="color: white;">Monitoramento Córrego Av. Carlos Caldeira Filho</h3>
-        <section class="formulario">
-            <div class="formulario_form">
-                <form class="forms">
-                    <div class="form">
-                        <input type="text" class="form-control" id="email" placeholder="Email" required>
-                    </div>
-                    <div class="form">
-                        <input type="password" class="form-control" id="senha" placeholder="Senha">
-                    </div>
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <a class="btn btn-secondary" href="javascript:;" role="button" id="Login">Entrar</a>
-                    </div>
-                </form>
+<main class="page-container py-4 d-flex flex-column align-items-center justify-content-start min-vh-100">
+    <div class="container d-flex flex-column align-items-center justify-content-start flex-grow-1">
+
+        <!-- Imagem do usuário -->
+        <div class="text-center mb-4">
+            <img id="fotoUsuario"
+                 src="@(Model.ImagemUrl)"
+                 alt="Imagem do Usuário"
+                 class="img-thumbnail rounded-circle shadow-sm"
+                 style="width: 180px; height: 180px; object-fit: cover;">
+            <div class="mt-2">
+                <label for="ImagemPerfil" class="btn btn-sm btn-outline-secondary">
+                    Alterar Foto
+                </label>
+                <input asp-for="ImagemPerfil" id="ImagemPerfil" type="file" class="d-none" accept="image/*" />
             </div>
-        </section>
+        </div>
 
-        <section class="link">
-            <div class="link_links">
-                <div class="links_cadastro">
-                    <a href="#" class="link-light" onclick="Cadastrar()">
-                        Cadastre-se clicando aqui
-                    </a>
-                </div>
-                <div class="links_resetsenha">
-                    <a href="/#" class="link-light" data-bs-toggle="modal"
-                       data-bs-target="#ModalReset">
-                        Esqueci minha senha
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
+        <!-- Card principal -->
+        <div class="card shadow-lg rounded-4 p-4 w-100" style="max-width: 900px;">
+            <h3 class="fw-semibold mb-4 text-center text-secondary">
+                Atualizar Cadastro
+            </h3>
 
-    <!-- Scripts -->
+            <form id="formAtualizarCadastro" enctype="multipart/form-data" class="row g-3">
+                <input type="hidden" id="CodUsuario" value="@Model.CodUsuario" />
+                <input type="hidden" id="CodPessoaCadastro" value="@Model.CodPessoaCadastro" />
+
+                <div class="col-md-6">
+                    <label class="form-label">Nome</label>
+                    <input id="Nome" class="form-control" value="@Model.Nome" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Sobrenome</label>
+                    <input id="Sobrenome" class="form-control" value="@Model.Sobrenome" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Data Nascimento</label>
+                    <input id="DataNascimento" type="date" class="form-control" value="@Model.DataNascimento.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Telefone</label>
+                    <input id="Telefone" class="form-control" value="@Model.Telefone" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">CPF</label>
+                    <input id="CPF" class="form-control" value="@Model.CPF" />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input id="Email" type="email" class="form-control" value="@Model.Email" @(isAdmin ? "" : "readonly") />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Endereço</label>
+                    <input id="Endereco" class="form-control" value="@Model.Endereco" />
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">CEP</label>
+                    <input id="CEP" class="form-control" value="@Model.CEP" />
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Estado</label>
+                    <select id="Estados" class="form-select" data-codestado="@Model.CodEstado"></select>
+                </div>
+
+                <div class="col-md-5">
+                    <label class="form-label">Cidade</label>
+                    <select id="Cidades" class="form-select" data-codcidade="@Model.CodCidade"></select>
+                </div>
+
+                <div class="col-12 mt-4 text-center">
+                    <button type="button" id="btnAtualizar" class="btn btn-secondary btn-lg w-100">
+                        Atualizar Cadastro
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="~/js/login.js" asp-append-version="true"></script>
-</body>
-</html>
+    <script src="~/js/atualizarCadastro.js" asp-append-version="true"></script>
+}

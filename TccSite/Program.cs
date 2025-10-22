@@ -35,17 +35,23 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // =======================
-// Expor pasta de imagens como rota estática
+// Servir arquivos estáticos da pasta wwwroot
 // =======================
-var imagensUsuariosPath = builder.Configuration["Arquivos:ImagensUsuarios"];
-if (!string.IsNullOrEmpty(imagensUsuariosPath))
+app.UseStaticFiles();
+
+// =======================
+// Expor pasta de imagens de usuários como rota estática
+// =======================
+var pastaImagens = builder.Configuration["Arquivos:ImagensUsuarios"];
+if (!string.IsNullOrEmpty(pastaImagens))
 {
     app.UseStaticFiles(new StaticFileOptions
     {
-        FileProvider = new PhysicalFileProvider(imagensUsuariosPath),
+        FileProvider = new PhysicalFileProvider(pastaImagens),
         RequestPath = "/ImagensUsuarios"
     });
 }
+
 
 // =======================
 // Middleware Pipeline

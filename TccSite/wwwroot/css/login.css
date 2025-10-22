@@ -1,65 +1,112 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+﻿/* =========================
+   Fontes e Reset básico
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins';
-}
-
-body {
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* =========================
+   Body e container principal
+========================= */
+body {
     background-color: #27374D;
+    min-height: 100vh;
 }
 
-.container {
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    height: 100vh;
+.login-container {
+    padding: 20px;
+    text-align: center;
 }
 
-.formulario {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
+.login-logo {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
-.forms {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+/* =========================
+   Card do login
+========================= */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    background-color: #1E2A38;
+    border-radius: 12px;
+    color: #fff;
 }
 
-.form-control {
-    width: 30rem;
+    .login-card input.form-control {
+        background-color: #2B3A4F;
+        border: 1px solid #394B63;
+        color: #fff;
+    }
+
+    .login-card input::placeholder {
+        color: #bbb;
+    }
+
+    .login-card .btn-primary {
+        background-color: #5563A2;
+        border: none;
+        font-weight: 600;
+        transition: background 0.3s;
+    }
+
+        .login-card .btn-primary:hover {
+            background-color: #3B4B7A;
+        }
+
+    .login-card a.link-light {
+        color: #AAB2C2;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+        .login-card a.link-light:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+/* =========================
+   Modal Reset de Senha
+========================= */
+.modal-reset-form input.form-control {
+    background-color: #f5f5f5;
+    color: #333;
 }
 
-.btn {
-    border: 2px solid black;
-    width: 15rem;
+.modal-reset-form button {
+    background-color: #5563A2;
+    color: #fff;
     font-weight: 600;
+    border: none;
+    transition: background 0.3s;
 }
 
-.link_links {
-    display: flex;
-    gap: 50px;
-    text-decoration: none;
-    color: white;
-    font-weight: normal;
-}
+    .modal-reset-form button:hover {
+        background-color: #3B4B7A;
+    }
 
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+/* =========================
+   Responsividade
+========================= */
+@media (max-width: 576px) {
+    .login-card {
+        padding: 20px;
+    }
 
-.modal-reset-senha {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+        .login-card input.form-control {
+            font-size: 0.9rem;
+        }
+
+        .login-card .btn-primary {
+            font-size: 0.95rem;
+        }
 }
