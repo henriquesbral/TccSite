@@ -5,7 +5,7 @@ using TccSite.Domain.Entities;
 
 namespace TccSite.Web.ViewModels
 {
-    public class EditarCadastroViewModel
+    public class UsuarioCadastroViewModel
     {
         public int CodUsuario { get; set; }
         public int CodPessoaCadastro { get; set; }
@@ -18,10 +18,13 @@ namespace TccSite.Web.ViewModels
         public string Endereco { get; set; }
         public string CEP { get; set; }
         public int CodCidade { get; set; }
+        public int CodEstado { get; set; }
         public DateTime DataNascimento { get; set; }
 
         // Usuario
         public string Email { get; set; }
+
+        public bool Ativo { get; set; }
 
         // Upload de imagem
         public IFormFile ImagemPerfil { get; set; }

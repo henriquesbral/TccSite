@@ -10,5 +10,7 @@ namespace TccSite.Domain.Interfaces
     public interface IPessoaCadastroRepository
     {
         PessoaCadastro Obter(int id);
+
+        void AtualizarPessoaCadastro(PessoaCadastro pessoa);
     }
 }

@@ -17,7 +17,7 @@ namespace TccSite.Controllers
             if (User?.Identity?.IsAuthenticated != true)
                 return 0;
 
-            var claim = User.FindFirst(ClaimTypes.NameIdentifier);
+            var claim = User.FindFirst(ClaimTypes.Sid);
             if (claim == null)
                 return 0;
 

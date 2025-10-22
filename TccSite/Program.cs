@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
 using TccSite.Application;
 using TccSite.Infrastructure;
 
@@ -34,6 +35,19 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // =======================
+// Expor pasta de imagens como rota estática
+// =======================
+var imagensUsuariosPath = builder.Configuration["Arquivos:ImagensUsuarios"];
+if (!string.IsNullOrEmpty(imagensUsuariosPath))
+{
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(imagensUsuariosPath),
+        RequestPath = "/ImagensUsuarios"
+    });
+}
+
+// =======================
 // Middleware Pipeline
 // =======================
 if (!app.Environment.IsDevelopment())
@@ -43,7 +57,6 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 
 app.UseRouting();
 

@@ -27,5 +27,7 @@ namespace TccSite.Domain.Entities
         public int CodCidade { get; set; }
 
         public DateTime DataCadastro { get; set; }
+
+        public string CaminhoImagemUsuario { get; set; }
     }
 }

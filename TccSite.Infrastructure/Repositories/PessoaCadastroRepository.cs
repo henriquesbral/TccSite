@@ -13,6 +13,12 @@ namespace TccSite.Infrastructure.Repository
             _context = context;
         }
 
+        public void AtualizarPessoaCadastro(PessoaCadastro pessoa)
+        {
+            _context.PessoaCadastro.Update(pessoa);
+            _context.SaveChanges();
+        }
+
         public PessoaCadastro Obter(int id)
         {
             var pessoa = _context.PessoaCadastro.Where(x => x.CodPessoaCadastro == id).FirstOrDefault();

@@ -5,5 +5,7 @@ namespace TccSite.Application.Interfaces
     public interface IPessoaCadastroService
     {
         PessoaCadastro Obter(int id);
+
+        void AtualizarPessoaCadastro(PessoaCadastro pessoa);
     }
 }

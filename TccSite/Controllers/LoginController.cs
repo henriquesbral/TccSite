@@ -99,9 +99,9 @@ namespace TccSite.Controllers
 
                 var claims = new List<Claim>
                     {
+                        new Claim(ClaimTypes.Sid, user.CodUsuario.ToString()),
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim(ClaimTypes.Role, perfilEnum.ToString()), // "Administrador", "Usuario" ou "PrimeiroAcesso"
-                        new Claim("CodUsuario", user.CodUsuario.ToString())
                     };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

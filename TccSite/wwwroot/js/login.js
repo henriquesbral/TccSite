@@ -1,7 +1,7 @@
-﻿$(document).ready(function () {
+﻿jQuery(document).ready(function ($) {
     $("#Login").on("click", async function (event) {
         event.preventDefault();
-debugger
+
         const email = $("#email").val().trim();
         const senha = $("#senha").val().trim();
 

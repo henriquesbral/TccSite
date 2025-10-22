@@ -18,6 +18,9 @@ namespace TccSite.Application.Services
             _repo = repo;
         }
 
+        public void AtualizarPessoaCadastro(PessoaCadastro pessoa)
+            => _repo.AtualizarPessoaCadastro(pessoa);
+
         public PessoaCadastro Obter(int id) 
             => _repo.Obter(id);
     }
