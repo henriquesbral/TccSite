@@ -16,14 +16,20 @@ namespace TccSite.Infrastructure.Repository
 
         public Configuracoes GetConfiguracao()
         {
-            var configuracoes = _context.Configuracoes.LastOrDefault();
-            return configuracoes;
+            return _context.Configuracoes.Where(x => x.DataConfiguracao <= DateTime.Now)
+                .OrderByDescending(x => x.DataConfiguracao).FirstOrDefault();
         }
 
         public void AtualizarConfiguracao(Configuracoes config)
         {
             _context.Configuracoes.Update(config);
             _context.SaveChangesAsync();
+        }
+
+        public List<Configuracoes> GetConfiguracoes()
+        {
+            var configuracoes = _context.Configuracoes.OrderByDescending(x => x.CodConfiguracoes).ToList();
+            return configuracoes;
         }
     }
 

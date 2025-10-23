@@ -18,15 +18,17 @@ namespace TccSite.Controllers
         {
             var config = _configuracoesService.GetConfiguracao();
 
-            var configuracoes = new ConfiguracoesViewModel
+            var configuracoes = new ConfiguracoesViewModel();
+
+            if (config != null)
             {
-                LimiteAlertaBaixo = config.LimiteAlertaBaixo,
-                LimiteAlertaMedio = config.LimiteAlertaMedio,
-                LimiteAlertaAlto = config.LimiteAlertaAlto,
-                FrequenciaCaptura = config.FrequenciaCaptura,
-                NotificarEmail = config.NotificarEmail,
-                NotificacaoWhatsapp = config.NotificacaoWhatsapp
-            };
+                configuracoes.LimiteAlertaBaixo = config.LimiteAlertaBaixo;
+                configuracoes.LimiteAlertaMedio = config.LimiteAlertaMedio;
+                configuracoes.LimiteAlertaAlto = config.LimiteAlertaAlto;
+                configuracoes.FrequenciaCaptura = config.FrequenciaCaptura;
+                configuracoes.NotificarEmail = config.NotificarEmail;
+                configuracoes.NotificacaoWhatsapp = config.NotificacaoWhatsapp;
+            }
 
             return View(configuracoes);
         }
@@ -52,7 +54,7 @@ namespace TccSite.Controllers
 
                 _configuracoesService.AtualizarConfiguracao(config);
 
-                return Json(new {success = true, message = "Configurações salvas com sucesso!" });
+                return View();
             }
             catch (Exception ex) 
             {

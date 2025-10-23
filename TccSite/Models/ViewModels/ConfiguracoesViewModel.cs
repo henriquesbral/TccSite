@@ -11,5 +11,7 @@
         public bool? NotificarEmail { get; set; }
         public bool? NotificacaoWhatsapp { get; set; }
 
+        public DateTime DataConfiguracao { get; set; }
+
     }
 }

@@ -25,7 +25,7 @@ namespace TccSite.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var usuariosCadastrados = _usuarioService.GetUsuarios();
+            var usuariosCadastrados = _usuarioService.GetUsuarioDTOs();
 
             var usuarios = new List<UsuarioViewModel>();
 
@@ -34,8 +34,8 @@ namespace TccSite.Controllers
                 usuarios.Add(new UsuarioViewModel
                     {
                         CodUsuario = u.CodUsuario,
-                        //Nome = $"{u.Nome} {u.SobreNome}",
-
+                        Nome = $"{u.Nome} {u.Sobrenome}",
+                        Email = u.Email
                     }
                 );
             }

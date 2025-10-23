@@ -1,4 +1,5 @@
-﻿using TccSite.Domain.Entities;
+﻿using TccSite.Domain.DTOs;
+using TccSite.Domain.Entities;
 
 namespace TccSite.Application.Interfaces
 {
@@ -13,6 +14,8 @@ namespace TccSite.Application.Interfaces
         Usuario ObterUsuarioPorEmail(string email);
 
         List<Usuario> GetUsuarios();
+
+        List<UsuarioDTO> GetUsuarioDTOs();
 
         void AdicionarUsuario(Usuario usuario);
 

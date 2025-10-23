@@ -6,6 +6,8 @@ namespace TccSite.Application.Interfaces
     {
         Configuracoes GetConfiguracao();
 
+        List<Configuracoes> GetConfiguracoes();
+
         void AtualizarConfiguracao(Configuracoes config);
     }
 

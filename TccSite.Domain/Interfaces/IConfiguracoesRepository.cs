@@ -11,6 +11,8 @@ namespace TccSite.Domain.Interfaces
     {
         Configuracoes GetConfiguracao();
 
+        List<Configuracoes> GetConfiguracoes();
+
         void AtualizarConfiguracao(Configuracoes configuracoes);
     }
 }

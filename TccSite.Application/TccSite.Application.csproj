@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TccSite.Domain\TccSite.Domain.csproj" />
+    <ProjectReference Include="..\TccSite.Infrastructure\TccSite.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

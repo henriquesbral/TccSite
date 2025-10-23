@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TccSite.Domain.DTOs;
 using TccSite.Domain.Entities;
 
 namespace TccSite.Data.Context
@@ -29,12 +30,19 @@ namespace TccSite.Data.Context
 
         #endregion
 
+        #region DTOs
+
+        public DbSet<UsuarioDTO> UsuarioDTOs { get; set; }
+
+        #endregion
+
         #region OnModelCreating
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Relatorios>().HasNoKey();
+            modelBuilder.Entity<UsuarioDTO>().HasNoKey();
         }
 
         #endregion

@@ -23,5 +23,8 @@ namespace TccSite.Application.Services
 
         public void AtualizarConfiguracao(Configuracoes configuracoes)
             => _repo.AtualizarConfiguracao(configuracoes);
+
+        public List<Configuracoes> GetConfiguracoes()
+            => _repo.GetConfiguracoes();
     }
 }
