@@ -8,6 +8,8 @@ namespace TccSite.Domain.Entities
 {
     public class Relatorios
     {
+        public int CodStatusAlerta { get; set; }
+
         public string NomeAlerta { get; set; }
 
         public string NomeStatusAlerta { get; set; }

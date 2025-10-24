@@ -12,6 +12,7 @@ namespace TccSite.Infrastructure.Repository
     public class AlertaRepository : IAlertaRepository
     {
         private readonly DataContext _context;
+        private DateTime DataMinima = new DateTime(01,01,0001);
 
         public AlertaRepository(DataContext context)
         {
@@ -25,14 +26,27 @@ namespace TccSite.Infrastructure.Repository
 
         public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim)
         {
-            var sb = new StringBuilder();
-            sb.Append("EXEC USP_GerarRelatorioAlertas");
-            sb.Append($"@DataInicio = {dataInicio}");
-            sb.Append($"@DataFim = {dataFim}");
+            DateTime dataInicioSql;
+            DateTime dataFimSql;
+            var alertas = new List<Relatorios>();
 
-            var sql = sb.ToString();
+            if (dataInicio != null && dataFim != null && dataInicio.Year != DataMinima.Year)
+            {
+                dataInicioSql = dataInicio.AddTicks(-(dataInicio.Ticks % TimeSpan.TicksPerSecond));
+                dataFimSql = dataFim.AddTicks(-(dataFim.Ticks % TimeSpan.TicksPerSecond));
+            }
+            else
+            {
+                dataInicioSql = DateTime.Now.AddDays(-90);
+                dataFimSql = DateTime.Now;
+            }
 
-            var alertas = _context.Set<Relatorios>().FromSqlRaw(sql).AsNoTracking().ToList();
+            var sql = "EXEC dbo.USP_GerarRelatorioAlertas @DataInicio = {0}, @DataFim = {1}";
+
+            alertas = _context.Set<Relatorios>()
+                .FromSqlRaw(sql, dataInicioSql, dataFimSql)
+                .AsNoTracking()
+                .ToList();
 
             return alertas;
         }

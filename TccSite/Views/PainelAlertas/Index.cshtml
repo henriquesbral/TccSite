@@ -16,46 +16,111 @@
     .page-container {
         min-height: calc(100vh - 10px);
         padding-top: 10px;
-        background-color: #f8f9fa; /* cor de fundo suave */
+        background-color: #f8f9fa;
     }
+
+    .card-nivel {
+        flex: 1;
+        text-align: center;
+        color: #fff;
+        font-weight: 600;
+        padding: 15px;
+        border-radius: 6px;
+    }
+
+    .nivel-baixo {
+        background-color: #28a745;
+    }
+    /* verde */
+    .nivel-medio {
+        background-color: #ffc107;
+    }
+    /* amarelo */
+    .nivel-alto {
+        background-color: #fd7e14;
+    }
+    /* laranja */
+    .nivel-critico {
+        background-color: #dc3545;
+    }
+    /* vermelho */
 </style>
 
 <div class="page-container d-flex flex-column">
     <!-- Cabeçalho -->
     <div class="card p-1 m-2 rounded-1">
         <div class="d-flex align-items-center">
-            <img src="/Assets/imagens/img_relatorio.png" alt="imagem_relatorio" class="img-relatorio me-3">
-            <h1 class="mb-0" style="font-weight:700;">Relatório Painel Alertas</h1>
+            <img src="/Assets/imagens/icon-siren.png" alt="imagem_relatorio" class="img-relatorio me-2">
+            <h1 class="mb-1" style="font-weight:700;">Painel Alertas</h1>
         </div>
+    </div>
+
+    <!-- Row: Últimos alertas por nível -->
+    <div class="row m-2 g-3">
+        <div class="col-md-3">
+            <div class="card-nivel nivel-baixo">
+                <h5>Baixo</h5>
+                <span id="alerta-baixo">--</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-nivel nivel-medio">
+                <h5>Médio</h5>
+                <span id="alerta-medio">--</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-nivel nivel-alto">
+                <h5>Alto</h5>
+                <span id="alerta-alto">--</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-nivel nivel-critico">
+                <h5>Crítico</h5>
+                <span id="alerta-critico">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráfico -->
+    <div class="card p-3 m-2 rounded-1">
+        <div id="graficoAlertas" style="height: 400px;"></div>
     </div>
 
     <!-- Filtros -->
     <div class="card p-3 m-2 rounded-1">
         <div class="filtro_alertas">
-            <form class="row g-3">
-                <div class="col-md-6 col-lg-4">
+            <form id="formRelatorio" class="row g-3">
+                <div class="col-md-6 col-lg-3">
                     <label class="form-label">Data Início</label>
                     <input type="date" class="form-control" id="DataInicio">
                 </div>
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-3">
                     <label class="form-label">Data Fim</label>
                     <input type="date" class="form-control" id="DataFim">
                 </div>
-                <div class="col-md-12 d-flex align-items-end flex-wrap gap-3">
-                    <div class="flex-grow-0" style="min-width: 200px;">
-                        <label class="form-label">Tipo Alerta:</label>
-                        <select class="form-select" id="TipoAlerta">
-                            <option value="0" selected>Todos</option>
-                            <option value="4">Crítico</option>
-                            <option value="3">Alto</option>
-                            <option value="2">Médio</option>
-                            <option value="1">Baixo</option>
-                        </select>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-success" type="submit">Filtrar</button>
-                        <button class="btn btn-secondary" type="reset">Limpar</button>
-                    </div>
+                <div class="col-md-6 col-lg-3">
+                    <label class="form-label">Tipo Alerta:</label>
+                    <select class="form-select" id="TipoAlerta">
+                        <option value="0" selected>Todos</option>
+                        <option value="4">Crítico</option>
+                        <option value="3">Alto</option>
+                        <option value="2">Médio</option>
+                        <option value="1">Baixo</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <label class="form-label">Tipo Relatório:</label>
+                    <select class="form-select" id="TipoRelatorio">
+                        <option value="1" selected>Por Alertas</option>
+                        <option value="2">Por Datas</option>
+                    </select>
+                </div>
+
+                <div class="col-12 d-flex justify-content-end gap-2">
+                    <button class="btn btn-success" type="submit">Filtrar</button>
+                    <button class="btn btn-secondary" type="reset">Limpar</button>
                 </div>
             </form>
         </div>
@@ -72,13 +137,14 @@
                     <th scope="col">Data</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tabelaAlertas">
                 <!-- Linhas preenchidas via JS -->
             </tbody>
         </table>
     </div>
 </div>
 
+<!-- Highcharts -->
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 <script src="/js/painelAlertas.js"></script>

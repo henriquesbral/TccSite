@@ -14,27 +14,24 @@ namespace TccSite.Controllers
         }
         public IActionResult Index()
         {
-            //var relatorios =;
-            return View();//return View(relatorios);
+            return View();
         }
 
         [HttpGet]
         public JsonResult BuscarRelatorioAlerta(DateTime dataInicio, DateTime dataFim, int tipoAlerta, int tipoRelatorio)
         {
-            var res = new RetornoJson { success = false };
-
             try
             {
                 var dadosRelatorioAlerta = _alertaService.GerarRelatorio(dataInicio, dataFim);
 
-                return Json(dadosRelatorioAlerta);
+                return Json(new { success = true, data = dadosRelatorioAlerta });
             }
             catch (Exception ex)
             {
-                res.msg = $"Erro ao buscar relatório: {ex.Message}";
-                return Json(res);
+                return Json(new { success = false, msg = $"Erro ao buscar relatório: {ex.Message}" });
             }
         }
+
 
         [HttpGet]
         public JsonResult BuscarRelatorioImagens(DateTime dataInicio, DateTime dataFim)
