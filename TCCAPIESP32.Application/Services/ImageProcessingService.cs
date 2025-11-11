@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace TCCAPIESP32.Application.Services
 {
@@ -6,15 +7,30 @@ namespace TCCAPIESP32.Application.Services
     {
         public async Task<string> ProcessImageAsync(string imagePath)
         {
-            // Aqui você pode integrar com:
-            // - ML.NET
-            // - OpenCVSharp
-            // - API externa (Azure Vision, OpenAI, etc.)
+            var pythonPath = "python"; // ou caminho completo do python.exe se precisar
+            var scriptPath = Path.Combine(AppContext.BaseDirectory, "Python", "process_image.py");
 
-            await Task.Delay(500); // simula tempo de processamento
+            var psi = new ProcessStartInfo
+            {
+                FileName = pythonPath,
+                Arguments = $"\"{scriptPath}\" \"{imagePath}\"",
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
 
-            // Exemplo fictício: detectar se a imagem tem água (para projeto IoT)
-            return $"Imagem {Path.GetFileName(imagePath)} processada com sucesso. (Exemplo: Detecção concluída)";
+            using var process = Process.Start(psi);
+
+            string output = await process.StandardOutput.ReadToEndAsync();
+            string error = await process.StandardError.ReadToEndAsync();
+
+            await process.WaitForExitAsync();
+
+            if (!string.IsNullOrWhiteSpace(error))
+                return $"Erro ao processar imagem: {error}";
+
+            return $"Resultado IA: {output}";
         }
     }
 }

@@ -16,24 +16,21 @@
 
     <!-- Seletor de tipo de relatório -->
     <div class="card p-3 m-2 rounded-1">
-        <div class="filtro_alertas">
-            <form id="formTipoRelatorio" class="row g-3">
-                <div class="col-md-6 col-lg-4">
-                    <label class="form-label">Tipo de Relatório</label>
-                    <select class="form-select" id="TipoRelatorio">
-                        <option value="" selected disabled>Selecione um tipo</option>
-                        <option value="nivel">Nível do Rio</option>
-                        <option value="alerta">Alertas</option>
-                        <!-- Adicione outros tipos se necessário -->
-                    </select>
-                </div>
-            </form>
-        </div>
+        <form id="formTipoRelatorio" class="row g-3">
+            <div class="col-md-6 col-lg-4">
+                <label class="form-label">Tipo de Relatório</label>
+                <select class="form-select" id="TipoRelatorio">
+                    <option value="" selected disabled>Selecione um tipo</option>
+                    <option value="nivel">Nível do Rio</option>
+                    <option value="alerta">Alertas</option>
+                </select>
+            </div>
+        </form>
     </div>
 
-    <!-- Campos de data e botão de filtro (inicialmente escondidos) -->
+    <!-- Campos de data e filtros -->
     <div id="filtrosDatas" class="card p-3 m-2 rounded-1" style="display:none;">
-        <form class="row g-3">
+        <form id="formFiltro" class="row g-3">
             <div class="col-md-6 col-lg-4">
                 <label class="form-label">Data Início</label>
                 <input type="date" class="form-control" id="DataInicio">
@@ -42,27 +39,34 @@
                 <label class="form-label">Data Fim</label>
                 <input type="date" class="form-control" id="DataFim">
             </div>
-            <div class="col-md-12 d-flex align-items-end flex-wrap gap-3">
-                <div class="flex-grow-0" style="min-width: 200px;">
-                    <label class="form-label">Tipo Alerta:</label>
-                    <select class="form-select" id="TipoAlerta">
-                        <option value="0" selected>Todos</option>
-                        <option value="4">Crítico</option>
-                        <option value="3">Alto</option>
-                        <option value="2">Médio</option>
-                        <option value="1">Baixo</option>
-                    </select>
-                </div>
-                <div class="d-flex gap-2">
-                    <button class="btn btn-success" type="submit">Filtrar</button>
-                    <button class="btn btn-secondary" type="reset">Limpar</button>
-                </div>
+            <div class="col-md-6 col-lg-4" id="divTipoAlerta" style="display:none;">
+                <label class="form-label">Tipo Alerta:</label>
+                <select class="form-select" id="TipoAlerta">
+                    <option value="0" selected>Todos</option>
+                    <option value="4">Crítico</option>
+                    <option value="3">Alto</option>
+                    <option value="2">Médio</option>
+                    <option value="1">Baixo</option>
+                </select>
+            </div>
+            <div class="col-md-12 d-flex justify-content-end gap-2">
+                <button class="btn btn-success" type="submit">Filtrar</button>
+                <button class="btn btn-secondary" type="reset">Limpar</button>
             </div>
         </form>
     </div>
 
-    <!-- Tabela com rolagem -->
-    <div class="card p-2 m-2 flex-fill overflow-auto rounded-1">
+    <!-- Gráficos -->
+    <div id="graficoAlertasContainer" class="card p-3 m-2 rounded-1" style="display:none;">
+        <div id="graficoAlertas" style="height:400px;"></div>
+    </div>
+
+    <div id="graficoNivelRio" class="card p-3 m-2 rounded-1" style="display:none;">
+        <div id="waveChart" style="height:400px;"></div>
+    </div>
+
+    <!-- Tabela de alertas -->
+    <div id="tabelaAlertasContainer" class="card p-2 m-2 flex-fill overflow-auto rounded-1" style="display:none;">
         <table class="table table-striped mb-0">
             <thead>
                 <tr>
@@ -72,11 +76,13 @@
                     <th scope="col">Data</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tabelaAlertas">
                 <!-- Linhas preenchidas via JS -->
             </tbody>
         </table>
     </div>
 </div>
 
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="~/js/relatorio.js"></script>

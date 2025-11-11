@@ -26,6 +26,7 @@ namespace TccSite.Data.Context
         public DbSet<ImagensEsp32> ImagensEsp32 { get; set; }
         public DbSet<Configuracoes> Configuracoes { get; set; }
         public DbSet<UsuarioSenha> UsuarioSenha { get; set; }
+        public DbSet<Relatorios> Relatorios { get; set; }
 
 
         #endregion

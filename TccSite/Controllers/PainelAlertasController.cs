@@ -22,7 +22,7 @@ namespace TccSite.Controllers
         {
             try
             {
-                var dadosRelatorioAlerta = _alertaService.GerarRelatorio(dataInicio, dataFim);
+                var dadosRelatorioAlerta = _alertaService.GerarRelatorio(dataInicio, dataFim, 0);
 
                 return Json(new { success = true, data = dadosRelatorioAlerta });
             }
@@ -40,7 +40,7 @@ namespace TccSite.Controllers
 
             try
             {
-                var dadosRelatorio = _alertaService.GerarRelatorio(dataInicio, dataFim);
+                var dadosRelatorio = _alertaService.GerarRelatorio(dataInicio, dataFim, 0);
 
                 return Json(dadosRelatorio);
             }

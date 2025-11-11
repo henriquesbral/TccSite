@@ -24,4 +24,8 @@
 		<ProjectReference Include="..\TCCAPIESP32.Application\TCCAPIESP32.Application.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Python\" />
+	</ItemGroup>
+
 </Project>

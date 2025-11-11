@@ -10,12 +10,14 @@ namespace TccSite.Domain.Entities
     {
         public int CodStatusAlerta { get; set; }
 
-        public string NomeAlerta { get; set; }
+        public string? NomeAlerta { get; set; }
 
-        public string NomeStatusAlerta { get; set; }
+        public string? NomeStatusAlerta { get; set; }
 
-        public string Ativo { get; set; }
+        public string? Ativo { get; set; }
 
         public DateTime? DataCadastroAlerta { get; set; }
+
+        public int NivelRio { get; set; }
     }
 }

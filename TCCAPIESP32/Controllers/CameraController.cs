@@ -91,8 +91,8 @@ namespace TCCAPIESP32.Controllers
                         _LogImagensEsp32Service.SalvarLog(log);
                     }
 
-                    //var resultadoia = await _imageProcessingService.ProcessImageAsync(imagePath);
-                    //retorno["processamentoia"] = resultadoia != null;
+                    var resultadoia = await _imageProcessingService.ProcessImageAsync(imagePath);
+                    retorno["processamentoia"] = resultadoia != null;
                 }
                 catch (Exception ex)
                 {

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq;
@@ -24,31 +25,81 @@ namespace TccSite.Infrastructure.Repository
             return _context.Alerta.ToList();
         }
 
-        public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim)
+        public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
         {
             DateTime dataInicioSql;
             DateTime dataFimSql;
             var alertas = new List<Relatorios>();
 
-            if (dataInicio != null && dataFim != null && dataInicio.Year != DataMinima.Year)
+            if (tipoAlerta != 0)
             {
-                dataInicioSql = dataInicio.AddTicks(-(dataInicio.Ticks % TimeSpan.TicksPerSecond));
-                dataFimSql = dataFim.AddTicks(-(dataFim.Ticks % TimeSpan.TicksPerSecond));
+                if (dataInicio != null && dataFim != null && dataInicio.Year != DataMinima.Year)
+                {
+                    dataInicioSql = dataInicio.AddTicks(-(dataInicio.Ticks % TimeSpan.TicksPerSecond));
+                    dataFimSql = dataFim.AddTicks(-(dataFim.Ticks % TimeSpan.TicksPerSecond));
+                }
+                else
+                {
+                    dataInicioSql = DateTime.Now.AddDays(-90);
+                    dataFimSql = DateTime.Now;
+                }
+
+                var sql = "EXEC dbo.USP_GerarRelatorioAlertas @DataInicio = {0}, @DataFim = {1}";
+
+                alertas = _context.Set<Relatorios>()
+                    .FromSqlRaw(sql, dataInicioSql, dataFimSql)
+                    .AsNoTracking()
+                    .ToList();
             }
             else
             {
-                dataInicioSql = DateTime.Now.AddDays(-90);
-                dataFimSql = DateTime.Now;
+                if (dataInicio != null && dataFim != null && dataInicio.Year != DataMinima.Year)
+                {
+                    dataInicioSql = dataInicio.AddTicks(-(dataInicio.Ticks % TimeSpan.TicksPerSecond));
+                    dataFimSql = dataFim.AddTicks(-(dataFim.Ticks % TimeSpan.TicksPerSecond));
+                }
+                else
+                {
+                    dataInicioSql = DateTime.Now.AddDays(-90);
+                    dataFimSql = DateTime.Now;
+                }
+
+                var sql = "EXEC dbo.usp_BuscarAlertas @DataInicio = {0}, @DataFim = {1}, @TipoAlerta = {2}";
+
+                alertas = _context.Set<Relatorios>()
+                    .FromSqlRaw(sql, dataInicioSql, dataFimSql, tipoAlerta)
+                    .AsNoTracking()
+                    .ToList();
             }
 
-            var sql = "EXEC dbo.USP_GerarRelatorioAlertas @DataInicio = {0}, @DataFim = {1}";
+            return alertas;
+        }
 
-            alertas = _context.Set<Relatorios>()
-                .FromSqlRaw(sql, dataInicioSql, dataFimSql)
+        public List<Relatorios> GerarRelatorioNivelRio(DateTime dataInicio, DateTime dataFim)
+        {
+            // Ajusta datas para remover ticks extras
+            DateTime dataInicioSql = dataInicio != DateTime.MinValue
+                ? dataInicio.AddTicks(-(dataInicio.Ticks % TimeSpan.TicksPerSecond))
+                : DateTime.Now.AddDays(-90);
+
+            DateTime dataFimSql = dataFim != DateTime.MinValue
+                ? dataFim.AddTicks(-(dataFim.Ticks % TimeSpan.TicksPerSecond))
+                : DateTime.Now;
+
+            // Cria parâmetros SQL
+            var parametros = new[]
+            { 
+                new SqlParameter("@DataInicio", dataInicioSql),
+                new SqlParameter("@DataFim", dataFimSql)
+            };
+
+            // Executa procedure
+            var dadosNivelRio = _context.Relatorios
+                .FromSqlRaw("EXEC dbo.usp_BuscarNivelRio @DataInicio, @DataFim", parametros)
                 .AsNoTracking()
                 .ToList();
 
-            return alertas;
+            return dadosNivelRio;
         }
 
         public Alerta Get(int codAlerta)
