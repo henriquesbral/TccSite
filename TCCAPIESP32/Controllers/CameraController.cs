@@ -13,6 +13,7 @@ namespace TCCAPIESP32.Controllers
         private readonly ImageProcessingService _imageProcessingService;
         private readonly ImagensEsp32Service _imagemEspService;
         private readonly LogImagensEsp32Service _LogImagensEsp32Service;
+        private readonly AlertaService _alertaService;
         private readonly ILogger<CameraController> _logger;
 
         const string RetornoPositivo = "Sucesso";
@@ -23,12 +24,14 @@ namespace TCCAPIESP32.Controllers
             ImageProcessingService imageProcessingService,
             ImagensEsp32Service metadataService,
             LogImagensEsp32Service logImagensEsp32Service,
+            AlertaService alertaService,
             ILogger<CameraController> logger)
         {
             _cameraService = cameraService;
             _imageProcessingService = imageProcessingService;
             _imagemEspService = metadataService;
             _LogImagensEsp32Service = logImagensEsp32Service;
+            _alertaService = alertaService;
             _logger = logger;
         }
 
@@ -92,6 +95,7 @@ namespace TCCAPIESP32.Controllers
                     }
 
                     var resultadoia = await _imageProcessingService.ProcessImageAsync(imagePath);
+                    var salvarAlerta = await _alertaService.SalvarAlertaAsync();
                     retorno["processamentoia"] = resultadoia != null;
                 }
                 catch (Exception ex)
