@@ -94,9 +94,24 @@ namespace TCCAPIESP32.Controllers
                         _LogImagensEsp32Service.SalvarLog(log);
                     }
 
-                    var resultadoia = await _imageProcessingService.ProcessImageAsync(imagePath);
-                    var salvarAlerta = await _alertaService.SalvarAlertaAsync();
-                    retorno["processamentoia"] = resultadoia != null;
+                    var resultadoIa = await _imageProcessingService.ProcessImageAsync(imagePath);
+
+                    // tenta converter a string retornada pela IA em decimal
+                    if (decimal.TryParse(resultadoIa, System.Globalization.NumberStyles.Any,
+                                         System.Globalization.CultureInfo.InvariantCulture, out var nivelRio))
+                    {
+                        _logger.LogInformation("💧 Nível do rio detectado: {NivelRio} cm", nivelRio);
+
+                        var salvarAlerta = await _alertaService.SalvarAlertaAsync(nivelRio);
+                        retorno["processamentoia"] = true;
+                    }
+                    else
+                    {
+                        _logger.LogWarning("⚠️ Falha ao converter o resultado da IA: {Resultado}", resultadoIa);
+                        retorno["processamentoia"] = false;
+                    }
+
+                    retorno["processamentoia"] = $"{resultadoIa}" != null;
                 }
                 catch (Exception ex)
                 {

@@ -25,6 +25,7 @@ builder.Services.AddScoped<CameraService>();
 builder.Services.AddScoped<ImageProcessingService>();
 builder.Services.AddScoped<ImagensEsp32Service>();
 builder.Services.AddScoped<LogImagensEsp32Service>();
+builder.Services.AddScoped<AlertaService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

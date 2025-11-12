@@ -22,7 +22,7 @@ namespace TCCAPIESP32.Domain.Entities
 
         public DateTime DataCadastro { get; set; }
 
-        public DateTime DataDesativacao { get; set; }
+        public DateTime? DataDesativacao { get; set; }
 
         public string Descricao { get; set; }
 

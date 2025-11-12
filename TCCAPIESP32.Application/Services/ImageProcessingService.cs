@@ -20,8 +20,8 @@ namespace TCCAPIESP32.Application.Services
             _pythonScriptsPath = configuration["AppSettings:PythonScriptsPath"]
                                  ?? Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Python"));
 
-            _logger.LogInformation("🧠 Python path configurado: {PythonPath}", _pythonExePath);
-            _logger.LogInformation("📂 Pasta de scripts Python: {ScriptsPath}", _pythonScriptsPath);
+            _logger.LogInformation("Python path configurado: {PythonPath}", _pythonExePath);
+            _logger.LogInformation("Pasta de scripts Python: {ScriptsPath}", _pythonScriptsPath);
         }
 
         public async Task<string> ProcessImageAsync(string imagePath)
@@ -32,11 +32,11 @@ namespace TCCAPIESP32.Application.Services
 
                 if (!File.Exists(scriptPath))
                 {
-                    _logger.LogError("❌ Script Python não encontrado em: {ScriptPath}", scriptPath);
+                    _logger.LogError("Script Python não encontrado em: {ScriptPath}", scriptPath);
                     return $"Erro: Script não encontrado em {scriptPath}";
                 }
 
-                _logger.LogInformation("🚀 Iniciando processamento Python para imagem: {ImagePath}", imagePath);
+                _logger.LogInformation("Iniciando processamento Python para imagem: {ImagePath}", imagePath);
 
                 var psi = new ProcessStartInfo
                 {
@@ -57,16 +57,15 @@ namespace TCCAPIESP32.Application.Services
 
                 if (!string.IsNullOrWhiteSpace(error))
                 {
-                    _logger.LogError("⚠️ Erro no processamento Python: {Error}", error);
+                    _logger.LogError("Erro no processamento Python: {Error}", error);
                     return $"Erro ao processar imagem: {error}";
                 }
 
-                _logger.LogInformation("✅ Resultado Python: {Output}", output.Trim());
-                return $"Nível detectado: {output.Trim()} cm";
+                return output.Trim();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "❌ Falha ao processar imagem no Python");
+                _logger.LogError(ex, "Falha ao processar imagem no Python");
                 return $"Erro interno: {ex.Message}";
             }
         }

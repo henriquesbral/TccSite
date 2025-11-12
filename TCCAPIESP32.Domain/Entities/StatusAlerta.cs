@@ -15,11 +15,4 @@ namespace TCCAPIESP32.Domain.Entities
         public string NomeStatus { get; set; }
     }
 
-    public enum TipoStatusAlerta
-    {
-        Baixo = 1,
-        Médio = 2,
-        Alto	= 3,
-        Crítico	= 4        
-    }
 }
