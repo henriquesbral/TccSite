@@ -29,6 +29,6 @@ namespace TccSite.Domain.Entities
 
         public string Descricao { get; set; }
 
-        public int? NivelRio { get; set; }
+        public decimal? NivelRio { get; set; }
     }
 }

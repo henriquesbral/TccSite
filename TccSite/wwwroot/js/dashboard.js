@@ -19,7 +19,9 @@ function carregarGraficoAlertas() {
             };
 
             dados.forEach(item => {
-                const dataCadastro = new Date(item.dataCadastro).getTime();
+                const utcDate = new Date(item.dataCadastro);
+                const localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
+                const dataCadastro = localDate.getTime();
                 const valor = item.nivelRio ?? 1; // usa 1 se não tiver valor
 
                 // Preenche a série correta com base no StatusAlerta

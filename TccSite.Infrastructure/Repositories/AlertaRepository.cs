@@ -22,7 +22,7 @@ namespace TccSite.Infrastructure.Repository
 
         public List<Alerta> BuscarAlertas()
         {
-            return _context.Alerta.ToList();
+            return _context.Alerta.Where(x => x.DataCadastro >= DateTime.Now.AddDays(-30)).ToList();
         }
 
         public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
