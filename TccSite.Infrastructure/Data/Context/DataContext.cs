@@ -27,6 +27,7 @@ namespace TccSite.Data.Context
         public DbSet<Configuracoes> Configuracoes { get; set; }
         public DbSet<UsuarioSenha> UsuarioSenha { get; set; }
         public DbSet<Relatorios> Relatorios { get; set; }
+        public DbSet<RelatorioNivelRio> RelatorioNivelRio { get; set; }
 
 
         #endregion
@@ -43,6 +44,7 @@ namespace TccSite.Data.Context
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Relatorios>().HasNoKey();
+            modelBuilder.Entity<RelatorioNivelRio>().HasNoKey();
             modelBuilder.Entity<UsuarioDTO>().HasNoKey();
         }
 

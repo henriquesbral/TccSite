@@ -25,6 +25,7 @@ namespace TccSite.Controllers
                 configuracoes.LimiteAlertaBaixo = config.LimiteAlertaBaixo;
                 configuracoes.LimiteAlertaMedio = config.LimiteAlertaMedio;
                 configuracoes.LimiteAlertaAlto = config.LimiteAlertaAlto;
+                configuracoes.LimiteAlertaCritico = config.LimiteAlertaCritico;
                 configuracoes.FrequenciaCaptura = config.FrequenciaCaptura;
                 configuracoes.NotificarEmail = config.NotificarEmail;
                 configuracoes.NotificacaoWhatsapp = config.NotificacaoWhatsapp;
@@ -39,7 +40,7 @@ namespace TccSite.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return View("Index", newConfig);
+                    return Json(new { success = false, message = "Dados inválidos, revise o formulário." });
 
                 var config = new Configuracoes
                 {
@@ -54,11 +55,11 @@ namespace TccSite.Controllers
 
                 _configuracoesService.AtualizarConfiguracao(config);
 
-                return View();
+                return Json(new { success = true, message = "Configurações salvas com sucesso!" });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                return Json(new {success = false, message = $"Ocorreu um erro ao salvar as configurações: {ex.Message}" });
+                return Json(new { success = false, message = $"Erro ao salvar: {ex.Message}" });
             }
         }
     }

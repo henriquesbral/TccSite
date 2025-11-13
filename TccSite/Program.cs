@@ -1,18 +1,37 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.FileProviders;
+using System.Globalization;
 using TccSite.Application;
 using TccSite.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add MVC
-builder.Services.AddControllersWithViews();
+// =======================
+// Cultura Global: pt-BR
+// =======================
+var defaultCulture = new CultureInfo("pt-BR");
+var localizationOptions = new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(defaultCulture),
+    SupportedCultures = new List<CultureInfo> { defaultCulture },
+    SupportedUICultures = new List<CultureInfo> { defaultCulture }
+};
 
-// Add Application and Infrastructure layers
+// 👇 Garantir que o Model Binder e toda a thread usem pt-BR
+CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
+
+// =======================
+// Serviços MVC e injeções
+// =======================
+builder.Services.AddControllersWithViews();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-// ========== AUTENTICAÇÃO E AUTORIZAÇÃO ==========
+// =======================
+// Autenticação e Autorização
+// =======================
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -20,7 +39,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/AcessoNegado"; // Página de acesso negado
     });
 
-// Definição de Policies (opcional, mas boa prática)
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdministradorPolicy", policy =>
@@ -35,13 +53,10 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // =======================
-// Servir arquivos estáticos da pasta wwwroot
+// Arquivos estáticos
 // =======================
 app.UseStaticFiles();
 
-// =======================
-// Expor pasta de imagens de usuários como rota estática
-// =======================
 var pastaImagens = builder.Configuration["Arquivos:ImagensUsuarios"];
 if (!string.IsNullOrEmpty(pastaImagens))
 {
@@ -52,7 +67,6 @@ if (!string.IsNullOrEmpty(pastaImagens))
     });
 }
 
-
 // =======================
 // Middleware Pipeline
 // =======================
@@ -62,15 +76,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRequestLocalization(localizationOptions);
 app.UseHttpsRedirection();
-
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
-// ORDEM IMPORTANTE:
-app.UseAuthentication(); // Primeiro: autenticação
-app.UseAuthorization();  // Depois: autorização
-
-// Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Index}/{id?}");

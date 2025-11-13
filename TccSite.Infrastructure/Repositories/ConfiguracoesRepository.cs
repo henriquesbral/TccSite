@@ -22,7 +22,7 @@ namespace TccSite.Infrastructure.Repository
 
         public void AtualizarConfiguracao(Configuracoes config)
         {
-            _context.Configuracoes.Update(config);
+            _context.Configuracoes.Add(config);
             _context.SaveChangesAsync();
         }
 

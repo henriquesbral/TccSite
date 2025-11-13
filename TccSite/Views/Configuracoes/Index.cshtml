@@ -1,50 +1,91 @@
-﻿@using TccSite.Domain
-@using TccSite.Web.ViewModels
+﻿@using TccSite.Web.ViewModels
 @model ConfiguracoesViewModel
 
-@* @{
-    ViewData["Title"] = "Configurações do Sistema";
-} *@
-
 <div class="container mt-4">
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">⚙️ Configurações do Sistema De Monitoramento ⚙️</h4>
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-gradient bg-primary text-white py-3 d-flex align-items-center justify-content-between">
+            <h4 class="mb-0">
+                <i class="bi bi-gear-fill me-2"></i> Configurações do Sistema de Monitoramento
+            </h4>
+            <span class="badge bg-light text-primary px-3 py-2">Painel Administrativo</span>
         </div>
-        <div class="card-body">
-            <form asp-action="Salvar" method="post">
+
+        <div class="card-body p-4">
+            <form id="formConfiguracoes" asp-action="Salvar" novalidate>
                 <input type="hidden" asp-for="Id" />
 
-                <div class="row mb-2">
+                <!-- Seção de limites -->
+                <h5 class="border-bottom pb-2 mb-3 text-secondary">
+                    <i class="bi bi-activity me-2"></i> Limites de Alerta
+                </h5>
+
+                <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <label asp-for="LimiteAlertaBaixo" class="form-label"></label>
-                        <input asp-for="LimiteAlertaBaixo" class="form-control" />
+                        <label asp-for="LimiteAlertaBaixo" class="form-label fw-semibold">Limite Alerta Baixo (cm)</label>
+                        <input asp-for="LimiteAlertaBaixo" class="form-control shadow-sm" step="0.01" inputmode="decimal" placeholder="Ex: 20" />
                         <span asp-validation-for="LimiteAlertaBaixo" class="text-danger"></span>
                     </div>
+
                     <div class="col-md-6">
-                        <label asp-for="LimiteAlertaMedio" class="form-label"></label>
-                        <input asp-for="LimiteAlertaMedio" class="form-control" />
+                        <label asp-for="LimiteAlertaMedio" class="form-label fw-semibold">Limite Alerta Médio (cm)</label>
+                        <input asp-for="LimiteAlertaMedio" class="form-control shadow-sm" step="0.01" inputmode="decimal" placeholder="Ex: 40" />
                         <span asp-validation-for="LimiteAlertaMedio" class="text-danger"></span>
                     </div>
+
                     <div class="col-md-6">
-                        <label asp-for="LimiteAlertaAlto" class="form-label"></label>
-                        <input asp-for="LimiteAlertaAlto" class="form-control" />
+                        <label asp-for="LimiteAlertaAlto" class="form-label fw-semibold">Limite Alerta Alto (cm)</label>
+                        <input asp-for="LimiteAlertaAlto" class="form-control shadow-sm" step="0.01" inputmode="decimal" placeholder="Ex: 60" />
                         <span asp-validation-for="LimiteAlertaAlto" class="text-danger"></span>
-                    </div>                    
+                    </div>
+
                     <div class="col-md-6">
-                        <label asp-for="LimiteAlertaCritico" class="form-label"></label>
-                        <input asp-for="LimiteAlertaCritico" class="form-control" />
+                        <label asp-for="LimiteAlertaCritico" class="form-label fw-semibold">Limite Alerta Crítico (cm)</label>
+                        <input asp-for="LimiteAlertaCritico" class="form-control shadow-sm" step="0.01" inputmode="decimal" placeholder="Ex: 80" />
                         <span asp-validation-for="LimiteAlertaCritico" class="text-danger"></span>
                     </div>
+                </div>
+
+                <!-- Seção de frequência -->
+                <h5 class="border-bottom pb-2 mb-3 text-secondary">
+                    <i class="bi bi-clock-history me-2"></i> Configurações de Captura
+                </h5>
+
+                <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <label asp-for="FrequenciaCaptura" class="form-label"></label>
-                        <input asp-for="FrequenciaCaptura" class="form-control" />
+                        <label asp-for="FrequenciaCaptura" class="form-label fw-semibold">Frequência de Captura (minutos)</label>
+                        <input asp-for="FrequenciaCaptura" class="form-control shadow-sm" placeholder="Ex: 5" />
                         <span asp-validation-for="FrequenciaCaptura" class="text-danger"></span>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success">Salvar</button>
+                <!-- Seção de notificações -->
+                <h5 class="border-bottom pb-2 mb-3 text-secondary">
+                    <i class="bi bi-bell-fill me-2"></i> Notificações
+                </h5>
+
+                <div class="form-check form-switch mb-3">
+                    <input asp-for="NotificarEmail" class="form-check-input" type="checkbox" id="notificarEmail" />
+                    <label class="form-check-label" for="notificarEmail">Ativar notificações por e-mail</label>
+                </div>
+
+                <div class="form-check form-switch mb-4">
+                    <input asp-for="NotificacaoWhatsapp" class="form-check-input" type="checkbox" id="notificarWhatsapp" />
+                    <label class="form-check-label" for="notificarWhatsapp">Ativar notificações por WhatsApp</label>
+                </div>
+
+                <!-- Botão salvar -->
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-success px-4 py-2 shadow-sm">
+                        <i class="bi bi-save2-fill me-1"></i> Salvar Configurações
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="~/js/configuracoes.js"></script>
+}

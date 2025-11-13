@@ -25,13 +25,13 @@ namespace TccSite.Infrastructure.Repository
             return _context.Alerta.Where(x => x.DataCadastro >= DateTime.Now.AddDays(-30)).ToList();
         }
 
-        public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim, int tipoAlerta)
+        public List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim, int? tipoAlerta)
         {
             DateTime dataInicioSql;
             DateTime dataFimSql;
             var alertas = new List<Relatorios>();
 
-            if (tipoAlerta != 0)
+            if (tipoAlerta != 0 && tipoAlerta is not null)
             {
                 if (dataInicio != null && dataFim != null && dataInicio.Year != DataMinima.Year)
                 {
@@ -44,10 +44,10 @@ namespace TccSite.Infrastructure.Repository
                     dataFimSql = DateTime.Now;
                 }
 
-                var sql = "EXEC dbo.USP_GerarRelatorioAlertas @DataInicio = {0}, @DataFim = {1}";
+                var sql = "EXEC dbo.USP_GerarRelatorioAlertas @DataInicio = {0}, @DataFim = {1}, @TipoAlerta = {2}";
 
                 alertas = _context.Set<Relatorios>()
-                    .FromSqlRaw(sql, dataInicioSql, dataFimSql)
+                    .FromSqlRaw(sql, dataInicioSql, dataFimSql, tipoAlerta)
                     .AsNoTracking()
                     .ToList();
             }
@@ -57,15 +57,16 @@ namespace TccSite.Infrastructure.Repository
                 {
                     dataInicioSql = dataInicio.AddTicks(-(dataInicio.Ticks % TimeSpan.TicksPerSecond));
                     dataFimSql = dataFim.AddTicks(-(dataFim.Ticks % TimeSpan.TicksPerSecond));
+                    tipoAlerta = null;
                 }
                 else
                 {
                     dataInicioSql = DateTime.Now.AddDays(-90);
                     dataFimSql = DateTime.Now;
+                    tipoAlerta = null;
                 }
 
-                var sql = "EXEC dbo.usp_BuscarAlertas @DataInicio = {0}, @DataFim = {1}, @TipoAlerta = {2}";
-
+                var sql = "EXEC dbo.USP_GerarRelatorioAlertas @DataInicio = {0}, @DataFim = {1}, @TipoAlerta = {2}";
                 alertas = _context.Set<Relatorios>()
                     .FromSqlRaw(sql, dataInicioSql, dataFimSql, tipoAlerta)
                     .AsNoTracking()
@@ -75,7 +76,7 @@ namespace TccSite.Infrastructure.Repository
             return alertas;
         }
 
-        public List<Relatorios> GerarRelatorioNivelRio(DateTime dataInicio, DateTime dataFim)
+        public List<RelatorioNivelRio> GerarRelatorioNivelRio(DateTime dataInicio, DateTime dataFim)
         {
             // Ajusta datas para remover ticks extras
             DateTime dataInicioSql = dataInicio != DateTime.MinValue
@@ -86,18 +87,13 @@ namespace TccSite.Infrastructure.Repository
                 ? dataFim.AddTicks(-(dataFim.Ticks % TimeSpan.TicksPerSecond))
                 : DateTime.Now;
 
-            // Cria parâmetros SQL
-            var parametros = new[]
-            { 
-                new SqlParameter("@DataInicio", dataInicioSql),
-                new SqlParameter("@DataFim", dataFimSql)
-            };
-
+            var sql = "EXEC dbo.usp_BuscarNivelRio @DataInicio = {0}, @DataFim = {1}";
             // Executa procedure
-            var dadosNivelRio = _context.Relatorios
-                .FromSqlRaw("EXEC dbo.usp_BuscarNivelRio @DataInicio, @DataFim", parametros)
-                .AsNoTracking()
-                .ToList();
+            var dadosNivelRio = _context.Set<RelatorioNivelRio>()
+                    .FromSqlRaw(sql, dataInicioSql, dataFimSql)
+                    .AsNoTracking()
+                    .ToList();
+
 
             return dadosNivelRio;
         }

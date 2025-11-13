@@ -142,6 +142,15 @@
             </tbody>
         </table>
     </div>
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["MensagemSucesso"]</div>
+    }
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger text-center">@TempData["MensagemErro"]</div>
+    }
 </div>
 
 <!-- Highcharts -->

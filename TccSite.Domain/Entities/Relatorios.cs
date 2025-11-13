@@ -8,7 +8,7 @@ namespace TccSite.Domain.Entities
 {
     public class Relatorios
     {
-        public int CodStatusAlerta { get; set; }
+        public int? CodStatusAlerta { get; set; }
 
         public string? NomeAlerta { get; set; }
 
@@ -18,6 +18,6 @@ namespace TccSite.Domain.Entities
 
         public DateTime? DataCadastroAlerta { get; set; }
 
-        public int NivelRio { get; set; }
+        public decimal? NivelRio { get; set; }
     }
 }

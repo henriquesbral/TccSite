@@ -9,8 +9,8 @@ namespace TccSite.Application.Interfaces
 
         Alerta Get(int codAlerta);
 
-        List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim, int tipoAlerta);
+        List<Relatorios> GerarRelatorio(DateTime dataInicio, DateTime dataFim, int? tipoAlerta);
 
-        List<Relatorios> GerarRelatorioNivelRio(DateTime dataInicio, DateTime dataFim);
+        List<RelatorioNivelRio> GerarRelatorioNivelRio(DateTime dataInicio, DateTime dataFim);
     }
 }
