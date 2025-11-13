@@ -2,27 +2,124 @@
     ViewData["Title"] = "Painel de Monitoramento";
 }
 
-<div class="container text-center mt-4">
-    <h2>Painel de Monitoramento</h2>
+<!-- Estilos -->
+<style>
+    body:not(.no-offwhite) main.page-content {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
 
-    <div class="my-3">
-        <button id="btnMonitorar" class="btn btn-primary">Iniciar Monitoramento</button>
-        <select id="tempoAtualizacao" class="form-select d-inline-block w-auto ms-2">
-            <option value="300000">5 minutos</option>
-            <option value="600000">10 minutos</option>
-            <option value="900000">15 minutos</option>
-        </select>
+    .painel-card {
+        background-color: #fff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    h2 {
+        color: #0077b6;
+        font-weight: 600;
+    }
+
+    .btn-gradient {
+        background: linear-gradient(90deg, #0077b6, #00b4d8);
+        color: #fff;
+        border: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        padding: 10px 22px;
+        border-radius: 8px;
+    }
+
+        .btn-gradient:hover {
+            background: linear-gradient(90deg, #0096c7, #48cae4);
+            transform: scale(1.05);
+        }
+
+    #status {
+        font-size: 1rem;
+        margin-top: 15px;
+        transition: color 0.3s ease;
+    }
+
+        #status.loading {
+            color: #0077b6;
+            animation: pulse 1.5s infinite;
+        }
+
+    @@keyframes pulse {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0.6;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    #ultimaImagem {
+        border-radius: 12px;
+        max-height: 420px;
+        object-fit: cover;
+        border: 2px solid #e9ecef;
+    }
+
+    #ultimaAtualizacao {
+        font-size: 0.9rem;
+    }
+
+    select {
+        min-width: 150px;
+    }
+</style>
+
+<!-- Conteúdo -->
+<main class="page-content">
+    <div class="container">
+        <div class="painel-card">
+            <h2 class="mb-4">
+                <i class="bi bi-camera-reels me-2"></i> Painel de Monitoramento
+            </h2>
+
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mb-3">
+                <button id="btnMonitorar" class="btn btn-gradient d-flex align-items-center gap-2">
+                    <i class="bi bi-play-circle-fill"></i> Iniciar Monitoramento
+                </button>
+
+                <select id="tempoAtualizacao" class="form-select w-auto">
+                    <option value="300000">5 minutos</option>
+                    <option value="600000">10 minutos</option>
+                    <option value="900000">15 minutos</option>
+                </select>
+            </div>
+
+            <div id="status" class="text-secondary mb-4">⏸️ Monitoramento parado</div>
+
+            <div class="mt-3 position-relative">
+                <div id="loadingSpinner" class="spinner-border text-info position-absolute top-50 start-50"
+                     style="display:none; transform: translate(-50%, -50%);" role="status">
+                    <span class="visually-hidden">Carregando...</span>
+                </div>
+
+                <img id="ultimaImagem" src="~/Imagens/placeholder.jpg" alt="Última imagem"
+                     class="img-fluid shadow" />
+                <div id="ultimaAtualizacao" class="mt-2 text-muted">Última atualização: -</div>
+            </div>
+        </div>
     </div>
-
-    <div id="status" class="text-secondary">Monitoramento parado</div>
-
-    <div class="mt-4">
-        <img id="ultimaImagem" src="~/Imagens/placeholder.jpg" alt="Última imagem"
-             class="img-fluid rounded shadow" style="max-height:400px;">
-        <div id="ultimaAtualizacao" class="mt-2 text-muted"></div>
-    </div>
-</div>
+</main>
 
 @section Scripts {
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/painelControle.js"></script>
 }

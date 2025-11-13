@@ -9,12 +9,12 @@ using TccSite.Web.ViewModels;
 
 namespace TccSite.Web.Controllers
 {
-    public class PainelControle : BaseController
+    public class PainelControleController : BaseController
     {
         private readonly IImagensEsp32Service _imagensEsp32Service;
         private readonly IWebHostEnvironment _env;
 
-        public PainelControle(IImagensEsp32Service imagensEsp32Service, IWebHostEnvironment env)
+        public PainelControleController(IImagensEsp32Service imagensEsp32Service, IWebHostEnvironment env)
         {
             _imagensEsp32Service = imagensEsp32Service;
             _env = env;
