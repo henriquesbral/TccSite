@@ -25,6 +25,7 @@ namespace TccSite.Infrastructure
             services.AddScoped<IStatusAlertaRepository, StatusAlertaRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioSenhaRepository, UsuarioSenhaRepository>();
+            services.AddScoped<IResetSenhaRepository, ResetSenhaRepository>();
 
             return services;
         }

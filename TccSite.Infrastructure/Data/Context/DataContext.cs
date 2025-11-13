@@ -28,6 +28,7 @@ namespace TccSite.Data.Context
         public DbSet<UsuarioSenha> UsuarioSenha { get; set; }
         public DbSet<Relatorios> Relatorios { get; set; }
         public DbSet<RelatorioNivelRio> RelatorioNivelRio { get; set; }
+        public DbSet<ResetSenha> ResetSenha { get; set; }
 
 
         #endregion

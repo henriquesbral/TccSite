@@ -19,6 +19,7 @@ namespace TccSite.Application
             services.AddScoped<IStatusAlertaService, StatusAlertaService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IUsuarioSenhaService, UsuarioSenhaService>();
+            services.AddScoped<IResetSenhaService, ResetSenhaService>();
 
             return services;
         }
