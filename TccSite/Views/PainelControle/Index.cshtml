@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Painel de Monitoramento";
+}
+
+<div class="container text-center mt-4">
+    <h2>Painel de Monitoramento</h2>
+
+    <div class="my-3">
+        <button id="btnMonitorar" class="btn btn-primary">Iniciar Monitoramento</button>
+        <select id="tempoAtualizacao" class="form-select d-inline-block w-auto ms-2">
+            <option value="300000">5 minutos</option>
+            <option value="600000">10 minutos</option>
+            <option value="900000">15 minutos</option>
+        </select>
+    </div>
+
+    <div id="status" class="text-secondary">Monitoramento parado</div>
+
+    <div class="mt-4">
+        <img id="ultimaImagem" src="~/Imagens/placeholder.jpg" alt="Última imagem"
+             class="img-fluid rounded shadow" style="max-height:400px;">
+        <div id="ultimaAtualizacao" class="mt-2 text-muted"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/painelControle.js"></script>
+}
