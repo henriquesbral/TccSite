@@ -22,9 +22,30 @@ namespace TccSite.Infrastructure.Repository
 
         public void AtualizarConfiguracao(Configuracoes config)
         {
-            _context.Configuracoes.Add(config);
-            _context.SaveChangesAsync();
+            var configExistente = _context.Configuracoes.FirstOrDefault();
+
+            if (configExistente != null)
+            {
+                configExistente.LimiteAlertaBaixo = config.LimiteAlertaBaixo;
+                configExistente.LimiteAlertaMedio = config.LimiteAlertaMedio;
+                configExistente.LimiteAlertaAlto = config.LimiteAlertaAlto;
+                configExistente.LimiteAlertaCritico = config.LimiteAlertaCritico;
+                configExistente.FrequenciaCaptura = config.FrequenciaCaptura;
+                configExistente.NotificarEmail = config.NotificarEmail;
+                configExistente.NotificacaoWhatsapp = config.NotificacaoWhatsapp;
+                configExistente.DataConfiguracao = DateTime.Now;
+
+                _context.Configuracoes.Update(configExistente);
+            }
+            else
+            {
+                config.DataConfiguracao = DateTime.Now;
+                _context.Configuracoes.Add(config);
+            }
+
+            _context.SaveChanges(); // ✅ método síncrono, realmente executa o commit
         }
+
 
         public List<Configuracoes> GetConfiguracoes()
         {

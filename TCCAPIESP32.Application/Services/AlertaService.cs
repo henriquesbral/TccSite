@@ -50,7 +50,7 @@ namespace TCCAPIESP32.Application.Services
 
                 var alerta = new Alerta()
                 {
-                    NomeAlerta = "Alerta Gerado por API + IA",
+                    NomeAlerta = msgAlerta.Substring(0, 21),
                     CodStatusAlerta = codStatusAlerta,
                     Ativo = "S",
                     DataCadastro = DateTime.Now,
