@@ -17,27 +17,21 @@ namespace TccSite.Controllers
 
         public IActionResult Index()
         {
-            var alertas = _alertaService.BuscarAlertas().Where(alerta => alerta.Ativo == "1").OrderByDescending(x => x.DataCadastro).ToList();
-
-            return View(alertas);
+            return View();
         }
 
         [HttpGet]
-        public JsonResult Alerta()
+        public JsonResult Alerta(DateTime dataInicio, DateTime dataFim)
         {
-            var dados = _alertaService.BuscarAlertas();
-
-            var data = dados
-                .Select(x => new AlertaGraficoViewModel
-                {
-                    CodAlerta = x.CodAlerta,
-                    DataCadastro = x.DataCadastro,
-                    NivelRio = x.NivelRio,
-                    StatusAlerta = ((StatusAlertaEnum)x.CodStatusAlerta).ToString()
-                })
-                .ToList();
-
-            return Json(data);
+            try
+            {
+                var dados = _alertaService.GerarRelatorioNivelRio(dataInicio, dataFim);
+                return Json(new { success = true, data = dados });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = ex.Message });
+            }
         }
     }
 }

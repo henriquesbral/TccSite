@@ -69,45 +69,15 @@
         </div>
     </div>
 
-    <div class="alertas p-2 flex-fill">
-        <div class="descricao_alertas">
-            @foreach (var alerta in Model)
-            {
-                var cor = alerta.StatusAlerta switch
-                {
-                    TccSite.Domain.Enums.StatusAlertaEnum.Critico => "bg-danger text-medium",
-                    TccSite.Domain.Enums.StatusAlertaEnum.Alto => "bg-danger bg-opacity-75 text-medium",
-                    TccSite.Domain.Enums.StatusAlertaEnum.Medio => "bg-warning",
-                    TccSite.Domain.Enums.StatusAlertaEnum.Baixo => "bg-success text-medium",
-                    _ => "bg-secondary"
-                };
-
-                <div class="card mb-2 shadow-sm">
-                    <div class="card-body @cor">
-                        <h5 class="card-title">@alerta.NomeAlerta - @alerta.StatusAlerta</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">
-                            @alerta.DataCadastro
-                        </h6>
-                        <p class="card-text">
-                            @alerta.Descricao
-                        </p>
-                        <a href="#" class="card-link text-white fw-bold " onclick="detalhesAlertas(); return false">
-                            Ver detalhes
-                        </a>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
 </div>
 
 <div class="card p-2 m-3 flex-fill overflow-auto rounded-1">
     <div class="card-body">
         <div class="container">
             <h1 class="text-center">Gráfico do nível do rio</h1>
-            <figure class="highcharts-figure">
-                <div id="container"></div>
-            </figure>
+            <div id="graficoNivelRio" class="card p-3 m-2 rounded-1" style="display:none;">
+                <div id="waveChart" style="height:400px;"></div>
+            </div>
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@ $(document).ready(function () {
     let monitorando = false;
     let intervalo = null;
 
-    const apiUrl = "https://localhost:5001/api/Camera/Capturar"; // URL da sua API
+    const apiUrl = "https://localhost:7032/api/Camera/Capturar"; // URL da sua API
     const ultimaImagemUrl = "/PainelControle/UltimaImagem"; // Rota do seu MVC
     const $status = $("#status");
     const $spinner = $("#loadingSpinner");

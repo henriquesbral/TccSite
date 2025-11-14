@@ -1,106 +1,152 @@
-﻿$(document).ready(function () {
-    carregarGraficoAlertas();
+﻿// =====================================
+// CARREGAMENTO AUTOMÁTICO
+// =====================================
+$(document).ready(function () {
+
+    carregarGraficoNivelRio();
+
+    atualizarHora();
+    obterClima();
+
+    setInterval(atualizarHora, 1000);
+    setInterval(obterClima, 15 * 60 * 1000);
 });
 
-function carregarGraficoAlertas() {
+
+// =====================================
+// FUNÇÃO: PEGAR DATA/HORA BRASILEIRA
+// =====================================
+function dataBrasil() {
+    return new Date(
+        new Date().toLocaleString("en-US", { timeZone: "America/Sao_Paulo" })
+    );
+}
+
+function toISO(date) {
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
+}
+
+
+// =====================================
+// FUNÇÃO: PARSEAR DATA COMO LOCAL
+// Impede que o JS converta para UTC
+// =====================================
+function parseLocalDate(dateString) {
+    const utcDate = new Date(dateString);
+    const localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
+    const newDataCadastroAlerta = localDate.getTime();
+
+    return newDataCadastroAlerta;
+}
+
+
+// =====================================
+// DOWN-SAMPLING PARA MUITOS REGISTROS
+// =====================================
+function reduzirPontos(lista, max = 500) {
+
+    if (lista.length <= max) return lista;
+
+    const fator = Math.ceil(lista.length / max);
+    const reduzido = [];
+
+    for (let i = 0; i < lista.length; i += fator) {
+        reduzido.push(lista[i]);
+    }
+
+    console.log("🔻 Dados reduzidos de", lista.length, "para", reduzido.length);
+    return reduzido;
+}
+
+
+// =====================================
+// CARREGAR GRÁFICO DO NÍVEL DO RIO
+// =====================================
+function carregarGraficoNivelRio() {
+
+    const agoraBR = dataBrasil();
+
+    const dataInicio = new Date(agoraBR.getTime() - 2 * 60 * 60 * 1000);
+    const dataFim = new Date(agoraBR.getTime() + 1 * 60 * 60 * 1000);
+
     $.ajax({
-        url: '/Dashboard/Alerta',
-        method: 'GET',
-        dataType: 'json',
-        success: function (dados) {
-            console.log("Dados recebidos:", dados); // para debug
+        url: "/Dashboard/Alerta",
+        method: "GET",
+        data: {
+            dataInicio: toISO(dataInicio),
+            dataFim: toISO(dataFim)
+        },
+        dataType: "json",
 
-            // Inicializa séries vazias para cada tipo de alerta
-            const series = {
-                Baixo: [],
-                Medio: [],
-                Alto: [],
-                Critico: []
-            };
+        success: function (retorno) {
 
-            dados.forEach(item => {
-                const utcDate = new Date(item.dataCadastro);
-                const localDate = new Date(utcDate.getTime() - utcDate.getTimezoneOffset() * 60000);
-                const dataCadastro = localDate.getTime();
-                const valor = item.nivelRio ?? 1; // usa 1 se não tiver valor
+            if (!retorno.success) {
+                Swal.fire("Erro", "Falha ao carregar o gráfico!", "error");
+                return;
+            }
 
-                // Preenche a série correta com base no StatusAlerta
-                switch (item.statusAlerta) {
-                    case "Baixo":
-                        series.Baixo.push([dataCadastro, valor]);
-                        break;
-                    case "Medio":
-                        series.Medio.push([dataCadastro, valor]);
-                        break;
-                    case "Alto":
-                        series.Alto.push([dataCadastro, valor]);
-                        break;
-                    case "Critico":
-                        series.Critico.push([dataCadastro, valor]);
-                        break;
-                }
-            });
+            const dados = retorno.data;
 
-            // Cria o gráfico Highcharts
-            Highcharts.chart('container', {
-                chart: { type: 'area' },
-                title: { text: 'Evolução do nível do rio por alerta' },
+            if (!Array.isArray(dados) || dados.length === 0) {
+                Swal.fire("Sem Dados", "Nenhum registro encontrado.", "info");
+                return;
+            }
+
+            console.log("Dados recebidos:", dados.length);
+
+            // Monta série com PARSE LOCAL para não perder horário!
+            let serie = dados.map(item => [
+                parseLocalDate(item.dataCadastroAlerta),
+                Number(item.nivelRio ?? 0)
+            ]);
+
+            // Redução automática
+            serie = reduzirPontos(serie);
+
+            // Exibe o card
+            document.getElementById("graficoNivelRio").style.display = "block";
+
+            Highcharts.chart("waveChart", {
+                chart: { type: "areaspline" },
+                title: { text: "Nível do Rio" },
                 xAxis: {
-                    type: 'datetime',
-                    title: { text: 'Data/Hora' }
+                    type: "datetime",
+                    title: { text: "Data/Hora" }
                 },
                 yAxis: {
-                    title: { text: 'Nível do rio' },
-                    allowDecimals: false
+                    title: { text: "Nível (m)" }
                 },
                 tooltip: {
-                    xDateFormat: '%d/%m/%Y %H:%M',
-                    shared: true
+                    shared: true,
+                    xDateFormat: "%d/%m/%Y %H:%M"
                 },
-                plotOptions: {
-                    area: {
-                        marker: {
-                            enabled: false,
-                            symbol: 'circle',
-                            radius: 2
-                        }
-                    }
-                },
-                series: [
-                    { name: 'Baixo', data: series.Baixo, color: '#28a745' },
-                    { name: 'Médio', data: series.Medio, color: '#ffc107' },
-                    { name: 'Alto', data: series.Alto, color: '#dc3545' },
-                    { name: 'Crítico', data: series.Critico, color: '#343a40' }
-                ]
+                series: [{
+                    name: "Nível do Rio",
+                    data: serie,
+                    color: "#0077b6"
+                }]
             });
         },
-        error: function (xhr, status, error) {
-            console.error("Erro ao buscar dados:", error);
-            Swal.fire("Erro ao carregar os dados do gráfico!");
+
+        error: function () {
+            Swal.fire("Erro", "Erro ao consultar o gráfico!", "error");
         }
     });
 }
 
-function detalhesAlertas() {
-    Swal.fire("Card de visualização em andamento");
-}
 
-$(document).ready(function () {
-    atualizarHora();
-    obterClima();
-
-    setInterval(atualizarHora, 1000);        // Atualiza a hora a cada segundo
-    setInterval(obterClima, 15 * 60 * 1000); // Atualiza o clima a cada 15 minutos
-});
-
+// =====================================
+// CLIMA + DATA/HORA
+// =====================================
 function atualizarHora() {
-    const agora = new Date();
-    const horaFormatada = agora.toLocaleString("pt-BR", { hour12: false });
-    $("#dataHoraLocal").text(horaFormatada);
+    const agora = dataBrasil();
+    $("#dataHoraLocal").text(
+        agora.toLocaleString("pt-BR", { hour12: false })
+    );
 }
 
 function obterClima() {
-    const cidade = "São Paulo"; // 🌎 Altere para sua cidade
+    const cidade = "São Paulo";
     const url = `https://wttr.in/${cidade}?format=j1`;
 
     $.getJSON(url, function (data) {
@@ -112,21 +158,20 @@ function obterClima() {
         const clima = data.current_condition[0];
         const temp = clima.temp_C;
         const descricao = clima.lang_pt ? clima.lang_pt[0].value : clima.weatherDesc[0].value;
-        const weatherCode = clima.weatherCode;
 
-        const horaAtual = new Date().getHours();
+        const horaAtual = dataBrasil().getHours();
         const ehNoite = horaAtual >= 18 || horaAtual < 6;
 
-        // 🌦️ Mapeia ícones Bootstrap baseados no código do clima
         let icone = "bi-cloud";
-        if (descricao.toLowerCase().includes("sol")) icone = ehNoite ? "bi-moon-stars" : "bi-brightness-high";
-        else if (descricao.toLowerCase().includes("chuva")) icone = "bi-cloud-rain";
-        else if (descricao.toLowerCase().includes("nublado")) icone = "bi-clouds";
-        else if (descricao.toLowerCase().includes("neblina")) icone = "bi-cloud-fog2";
-        else if (descricao.toLowerCase().includes("tempestade")) icone = "bi-cloud-lightning-rain";
-        else if (descricao.toLowerCase().includes("neve")) icone = "bi-snow";
+        const desc = descricao.toLowerCase();
 
-        // Atualiza painel
+        if (desc.includes("sol")) icone = ehNoite ? "bi-moon-stars" : "bi-brightness-high";
+        else if (desc.includes("chuva")) icone = "bi-cloud-rain";
+        else if (desc.includes("nublado")) icone = "bi-clouds";
+        else if (desc.includes("neblina")) icone = "bi-cloud-fog2";
+        else if (desc.includes("tempestade")) icone = "bi-cloud-lightning-rain";
+        else if (desc.includes("neve")) icone = "bi-snow";
+
         $("#climaAtual").html(`${temp}°C - ${descricao}`);
         $("#iconeClima").html(`<i class="bi ${icone} fs-3 pulsando"></i>`);
     }).fail(function () {
